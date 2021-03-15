@@ -1,32 +1,41 @@
 <template>
   <div class="login-container">
 
+    <div class="header">
+      <div class="header-item">
+
+        <div class="header-item-icon" @click="goHome">
+          智能交通查询平台
+        </div>
+
+        <div class="register-go" @click="showLoginOr = !showLoginOr">
+          <span v-if="showLoginOr">注册</span>
+          <span v-else>登录</span>
+        </div>
+
+      </div>
+    </div>
+
     <div class="login-div" v-if="showLoginOr">
 
-      <svg @click="goHome()" t="1614174976054" class="icon111" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
-           p-id="1690" width="64" height="64">
-        <path
-          d="M645.924571 0C693.101714 0 731.428571 35.328 731.428571 78.774857v866.450286C731.428571 988.672 693.101714 1024 645.924571 1024H85.504C38.326857 1024 0 988.672 0 945.225143V78.774857C0 35.328 38.326857 0 85.504 0h560.420571zM841.142857 438.857143a36.571429 36.571429 0 0 1 36.571429 36.571428v512a36.571429 36.571429 0 0 1-73.142857 0v-512a36.571429 36.571429 0 0 1 36.571428-36.571428z m146.285714 292.571428a36.571429 36.571429 0 0 1 36.571429 36.571429v219.428571a36.571429 36.571429 0 0 1-73.142857 0v-219.428571a36.571429 36.571429 0 0 1 36.571428-36.571429zM657.773714 73.069714h-585.142857v877.641143h585.142857v-877.714286zM585.142857 331.995429c0 13.897143-7.460571 26.112-18.651428 33.133714C550.253714 458.605714 466.432 530.066286 365.714286 530.066286S181.174857 458.605714 164.937143 365.129143A39.204571 39.204571 0 0 1 146.285714 332.068571C146.285714 310.272 164.498286 292.571429 186.88 292.571429c22.381714 0 40.521143 17.700571 40.521143 39.497142a38.765714 38.765714 0 0 1-12.8 28.672C228.425143 429.641143 290.889143 481.718857 365.714286 481.718857s137.289143-52.077714 151.113143-120.978286a38.765714 38.765714 0 0 1-12.8-28.745142c0-21.723429 18.139429-39.424 40.521142-39.424 22.381714 0 40.594286 17.700571 40.594286 39.497142zM329.142857 804.571429h73.142857a36.571429 36.571429 0 0 1 0 73.142857h-73.142857a36.571429 36.571429 0 0 1 0-73.142857z"
-          p-id="1691" fill="#d81e06"></path>
-      </svg>
 
-      <div style="margin: 10px auto;color: #989898">
-        <h3>云购手机商城登录</h3>
+      <div style="margin: 20px auto;color: black;border-bottom: solid 1px #ebebeb">
+        <h3>智能交通平台登录</h3>
       </div>
 
       <!-- 登录表单 -->
       <div class="login-form">
 
-        <el-form ref="loginFormRef" label-width="0" class="login_form"
+        <el-form label-width="0" class="login_form"
                  :model="loginForm2" :rules="loginFormRules">
           <!--用户名-->
-          <el-form-item prop="uname">
+          <el-form-item>
             <el-input class="form-input" placeholder="用户名"
                       v-model="loginForm2.uname" :autofocus="true"/>
           </el-form-item>
 
           <!--密码-->
-          <el-form-item prop="password">
+          <el-form-item>
             <el-input class="form-input" type="password"
                       placeholder="密码" v-model="loginForm2.pwd"/>
           </el-form-item>
@@ -38,12 +47,7 @@
             </div>
           </el-form-item>
 
-          <div class="register-go">
-            <el-link class="register-go-a"
-                     @click="showLoginOr = !showLoginOr">
-              注册
-            </el-link>
-          </div>
+
         </el-form>
       </div>
 
@@ -52,62 +56,113 @@
     <!-- ========================= -->
     <!-- 注册 -->
     <!-- ========================= -->
-    <div class="login-div22" v-if="!showLoginOr">
-      <svg @click="goHome()" t="1614174976054" class="icon111" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
-           p-id="1690" width="64" height="64">
-        <path
-          d="M645.924571 0C693.101714 0 731.428571 35.328 731.428571 78.774857v866.450286C731.428571 988.672 693.101714 1024 645.924571 1024H85.504C38.326857 1024 0 988.672 0 945.225143V78.774857C0 35.328 38.326857 0 85.504 0h560.420571zM841.142857 438.857143a36.571429 36.571429 0 0 1 36.571429 36.571428v512a36.571429 36.571429 0 0 1-73.142857 0v-512a36.571429 36.571429 0 0 1 36.571428-36.571428z m146.285714 292.571428a36.571429 36.571429 0 0 1 36.571429 36.571429v219.428571a36.571429 36.571429 0 0 1-73.142857 0v-219.428571a36.571429 36.571429 0 0 1 36.571428-36.571429zM657.773714 73.069714h-585.142857v877.641143h585.142857v-877.714286zM585.142857 331.995429c0 13.897143-7.460571 26.112-18.651428 33.133714C550.253714 458.605714 466.432 530.066286 365.714286 530.066286S181.174857 458.605714 164.937143 365.129143A39.204571 39.204571 0 0 1 146.285714 332.068571C146.285714 310.272 164.498286 292.571429 186.88 292.571429c22.381714 0 40.521143 17.700571 40.521143 39.497142a38.765714 38.765714 0 0 1-12.8 28.672C228.425143 429.641143 290.889143 481.718857 365.714286 481.718857s137.289143-52.077714 151.113143-120.978286a38.765714 38.765714 0 0 1-12.8-28.745142c0-21.723429 18.139429-39.424 40.521142-39.424 22.381714 0 40.594286 17.700571 40.594286 39.497142zM329.142857 804.571429h73.142857a36.571429 36.571429 0 0 1 0 73.142857h-73.142857a36.571429 36.571429 0 0 1 0-73.142857z"
-          p-id="1691" fill="#d81e06"></path>
-      </svg>
+    <div style="margin: 0 auto;width: 1100px;height: 100%;display: flex;flex-direction: column" v-if="!showLoginOr">
 
-      <div style="margin: 10px auto;color: #989898">
-        <h3>云购手机商城注册</h3>
+      <div style="width: 800px;margin: 0 auto">
+        <el-steps v-if="active== '1'" :active="1" finish-status="success" simple style="margin-top: 4px">
+          <el-step title="第一步 填写个人信息">
+          </el-step>
+          <el-step title="第二步 填写车辆信息"></el-step>
+        </el-steps>
+
+        <el-steps v-else :active="2" finish-status="success" simple style="margin-top: 4px">
+          <el-step title="第一步 填写个人信息">
+          </el-step>
+          <el-step title="第二步 填写车辆信息"></el-step>
+        </el-steps>
       </div>
 
-      <!-- 登录表单 -->
-      <div class="register-form">
-        <el-form ref="loginFormRef" label-position="right"
-                 :model="registerForm" :rules="loginFormRules2">
-          <!--用户名-->
-          <el-form-item prop="uname">
-            <el-input placeholder="用户名" v-model="registerForm.uname"
-                      :autofocus="true"/>
-          </el-form-item>
+      <div v-if="active == 1" class="login-div22">
 
-          <!--密码-->
-          <el-form-item prop="pwd">
-            <el-input type="password" placeholder="密码"
-                      v-model="registerForm.pwd"/>
-          </el-form-item>
+        <div style="margin: 4px auto;color: black">
+          <h3>智能交通平台注册</h3>
+        </div>
 
-          <!--手机号-->
-          <el-form-item prop="phone">
-            <el-input placeholder="手机号" v-model="registerForm.phone"/>
-          </el-form-item>
+        <!-- 登录表单 -->
+        <div class="register-form">
+          <el-form ref="loginFormRef" label-position="right"
+                   :model="registerForm" :rules="loginFormRules2">
+            <!--用户名-->
+            <el-form-item>
+              <el-input placeholder="用户名" v-model="registerForm.uname"
+                        :autofocus="true"/>
+            </el-form-item>
 
-          <!-- 登录按钮 -->
-          <el-form-item>
-            <div class="form-btn22" @click="registerGo">
-              <div class="login-span">注 &nbsp;&nbsp;&nbsp;册</div>
-            </div>
-          </el-form-item>
+            <!--密码-->
+            <el-form-item>
+              <el-input type="password" placeholder="密码"
+                        v-model="registerForm.pwd"/>
+            </el-form-item>
 
-          <div class="register-go">
-            <el-link class="register-go-a"
-                     @click="showLoginOr = !showLoginOr">
-              登录
-            </el-link>
-          </div>
-        </el-form>
+            <!--手机号-->
+            <el-form-item prop="phone">
+              <el-input placeholder="手机号" v-model="registerForm.phone"/>
+            </el-form-item>
+
+            <!-- 登录按钮 -->
+            <el-form-item>
+              <div class="form-btn22" @click="registerGo">
+                <div class="login-span"><i class="el-icon-right"></i>&nbsp;下一步</div>
+              </div>
+            </el-form-item>
+
+          </el-form>
+
+        </div>
+
 
       </div>
+
+      <div v-if="active == 2" class="login-div22">
+
+        <div style="margin: 4px auto;color: black">
+          <h3>智能交通平台注册</h3>
+        </div>
+
+        <!-- 登录表单 -->
+        <div class="register-form">
+          <el-form ref="loginFormRef" label-position="right"
+                   :model="registerForm" :rules="loginFormRules2">
+            <!--用户名-->
+            <el-form-item>
+              <el-input placeholder="用户名" v-model="registerForm.uname"
+                        :autofocus="true"/>
+            </el-form-item>
+
+            <!--密码-->
+            <el-form-item>
+              <el-input type="password" placeholder="密码"
+                        v-model="registerForm.pwd"/>
+            </el-form-item>
+
+            <!--手机号-->
+            <el-form-item prop="phone">
+              <el-input placeholder="手机号" v-model="registerForm.phone"/>
+            </el-form-item>
+
+            <!-- 登录按钮 -->
+            <el-form-item>
+              <div class="form-btn22" @click="registerGo">
+                <div class="login-span"><i class="el-icon-right"></i>&nbsp;下一步</div>
+              </div>
+            </el-form-item>
+
+          </el-form>
+
+        </div>
+
+
+      </div>
+
+
     </div>
+
 
   </div>
 </template>
 
 <script>
-  import { userLogin, addUser } from '../../api/common'
+  import {userLogin, addUser} from '../../api/common'
 
   export default {
     name: 'userLogin',
@@ -133,32 +188,32 @@
         loginFormRules: {
           uname:
             [
-              { required: true, message: '请输入用户名', trigger: 'blur' },
-              { min: 1, max: 50, message: '长度在 3 到 50 个字符', trigger: 'blur' }
+              {required: true, message: '请输入用户名', trigger: 'blur'},
+              {min: 1, max: 50, message: '长度在 3 到 50 个字符', trigger: 'blur'}
             ],
           pwd:
             [
-              { required: true, message: '请输入密码', trigger: 'blur' },
-              { min: 3, max: 16, message: '长度在 3 到 16 个字符', trigger: 'blur' }
+              {required: true, message: '请输入密码', trigger: 'blur'},
+              {min: 3, max: 16, message: '长度在 3 到 16 个字符', trigger: 'blur'}
             ]
         },
 
-        showLoginOr: true,
+        showLoginOr: false,
         //表单验证
         loginFormRules2: {
           uname:
             [
-              { required: true, message: '请输入用户名', trigger: 'blur' },
-              { min: 3, max: 50, message: '长度在 3 到 50 个字符', trigger: 'blur' }
+              {required: true, message: '请输入用户名', trigger: 'blur'},
+              {min: 3, max: 50, message: '长度在 3 到 50 个字符', trigger: 'blur'}
             ],
           pwd:
             [
-              { required: true, message: '请输入密码', trigger: 'blur' },
-              { min: 3, max: 16, message: '长度在 3 到 16 个字符', trigger: 'blur' }
+              {required: true, message: '请输入密码', trigger: 'blur'},
+              {min: 3, max: 16, message: '长度在 3 到 16 个字符', trigger: 'blur'}
             ],
           phone: [
-            { required: true, message: '请输入手机号', trigger: 'blur' },
-            { validator: checkMobile, trigger: 'blur' }
+            {required: true, message: '请输入手机号', trigger: 'blur'},
+            {validator: checkMobile, trigger: 'blur'}
           ]
         },
         // 注册表单
@@ -167,8 +222,10 @@
           pwd: '',
           sex: '1',
           phone: '',
-          email: ''
-        }
+          email: '',
+        },
+
+        active: '1',
 
       }
     },
@@ -185,12 +242,18 @@
 
       async login() {
         if (this.loginForm2.uname.trim() == '') {
-          this.$message({ message: '用户名不能为空', type: 'error', duration: 1700 })
+          this.$notify.error({
+            title: '错误',
+            message: '用户名不能为空'
+          });
           return
         }
 
         if (this.loginForm2.pwd.trim() == '') {
-          this.$message({ message: '密码不能为空', type: 'error', duration: 1700 })
+          this.$notify.error({
+            title: '错误',
+            message: '密码不能为空'
+          });
           return
         }
         await userLogin(this.loginForm2).then(res => {
@@ -198,9 +261,9 @@
             res.data.data.pwd = ''
             res.data.data.salt = ''
             window.localStorage.setItem('UserInfoPhone', JSON.stringify(res.data.data))
-            this.$router.push({ path: '/phone/home' })
+            this.$router.push({path: '/home'})
           } else {
-            this.$message({ message: res.message, type: 'error', duration: 1700 })
+            this.$message({message: res.message, type: 'error', duration: 1700})
 
           }
 
@@ -210,39 +273,47 @@
 
       // 去首页
       goHome() {
-        this.$router.push({path: `/phone/home`})
+        this.$router.push({path: `/home`})
       },
 
       async registerGo() {
         if (this.registerForm.uname.trim() == '') {
-          this.$message({ message: '用户名不能为空', type: 'error', duration: 1700 })
+          this.$notify({
+            title: '警告', message: '用户名不能为空', type: 'warning'
+          });
           return
         }
 
         if (this.registerForm.pwd.trim() == '') {
-          this.$message({ message: '密码不能为空', type: 'error', duration: 1700 })
+          this.$notify({
+            title: '警告', message: '密码不能为空', type: 'warning'
+          });
           return
         }
 
-        if (this.registerForm.phone.trim() == '') {
-          this.$message({ message: '手机号不能为空', type: 'error', duration: 1700 })
-          return
-        }
+        // if (this.registerForm.phone.trim() == '') {
+        //     this.$notify({
+        //       title: '警告', message: '手机号不能为空', type: 'warning'
+        //     });
+        //     return
+        // }
 
-        await addUser(this.registerForm).then(res => {
-          if (res.success) {
-            this.$message({ message: res.message, type: 'success', duration: 2000 })
-            // res.data.data.pwd = ''
-            // res.data.data.salt = ''
-            // window.localStorage.setItem('UserInfo', JSON.stringify(res.data.data))
-            this.loginForm2.uname = res.data.data
-            console.log(res.data.data)
-            this.showLoginOr = true
-          } else {
-            this.$message({ message: res.message, type: 'error', duration: 2000 })
+        this.active = '2'
 
-          }
-        })
+        // await addUser(this.registerForm).then(res => {
+        //   if (res.success) {
+        //     this.$message({message: res.message, type: 'success', duration: 2000})
+        //     // res.data.data.pwd = ''
+        //     // res.data.data.salt = ''
+        //     // window.localStorage.setItem('UserInfo', JSON.stringify(res.data.data))
+        //     this.loginForm2.uname = res.data.data
+        //     console.log(res.data.data)
+        //     this.showLoginOr = true
+        //   } else {
+        //     this.$message({message: res.message, type: 'error', duration: 2000})
+        //
+        //   }
+        // })
 
       },
 
@@ -263,32 +334,34 @@
 <style scoped>
 
   .login-container {
-    background-image: url("../../assets/login2.jpg");
     width: 100%;
     height: 100%;
     margin: 0;
     padding: 0;
     display: flex;
+    flex-direction: column;
   }
 
   .login-div {
     width: 400px;
-    height: 400px;
+    height: 360px;
     background-color: white;
     margin: 40px auto;
     border-radius: 12px;
     display: flex;
     flex-direction: column;
+    border: solid 2px #d6d6d6;
   }
 
   .login-div22 {
     width: 400px;
-    height: 440px;
+    height: 360px;
     background-color: white;
     margin: 40px auto;
     border-radius: 12px;
     display: flex;
     flex-direction: column;
+    border: solid 2px #d6d6d6;
   }
 
   .left-image {
@@ -310,29 +383,27 @@
 
   .form-input {
     width: 330px;
-    /*margin-top: 2px;*/
-    /*background-color: #ffb01e;*/
-    /*cursor: pointer;*/
     display: flex;
-    border-radius: 3px;
+    /*border-radius: 3px;*/
   }
 
   .form-btn {
-    margin-top: 20px;
-    width: 330px;
-    background-color: #d81e06;
+    float: right;
+    margin-top: 30px;
+    width: 100px;
+    background-color: #161616;
     cursor: pointer;
     display: flex;
     border-radius: 5px;
-    line-height: 40px;
-    height: 40px;
+    line-height: 34px;
+    height: 34px;
     text-align: center;
   }
 
   .form-btn22 {
     /*margin-top: 10px;*/
     width: 330px;
-    background-color: #5a98de;
+    background-color: #3f699a;
     cursor: pointer;
     display: flex;
     border-radius: 5px;
@@ -362,7 +433,10 @@
   }
 
   .register-go {
-    /*margin-top: 10px;*/
+    font-size: 14px;
+    line-height: 60px;
+    margin-right: 10px;
+    cursor: pointer;
 
   }
 
@@ -396,7 +470,32 @@
   /deep/ .el-link.el-link--default:hover {
     color: #e47a0f;
   }
-  /deep/  .el-link.el-link--default:hover {
+
+  /deep/ .el-link.el-link--default:hover {
     color: #e47a0f;
+  }
+
+  .header {
+    width: 100%;
+    height: 60px;
+    background-color: #fafafa;
+    border-bottom: solid 1px #d2d2d2;
+    display: flex;
+  }
+
+  .header-item {
+    width: 1200px;
+    height: 100%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+
+  }
+
+  .header-item-icon {
+    line-height: 60px;
+    font-size: 22px;
+    font-weight: 500;
+    cursor: pointer;
   }
 </style>

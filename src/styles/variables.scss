@@ -1,25 +1,23 @@
 // sidebar
-//$menuText:#bfcbd9;
-$menuText:#000;
-//$menuActiveText:#409EFF;
-$menuActiveText:#000;
-//$subMenuActiveText:#f4f4f5;
-$subMenuActiveText: #d81e06;
+$menuText:#bfcbd9;
+//$menuText:#000;
+$menuActiveText:#409EFF;
+//$menuActiveText:#000;
+$subMenuActiveText:#f4f4f5;
+//$subMenuActiveText: #d81e06;
 
-//$menuBg:#304156;
-$menuBg:#e8e8e8;
-//$menuHover:#263445;
-$menuHover: #e8e8e8;
+$menuBg:#304156;
+//$menuBg:#e8e8e8;
+$menuHover:#263445;
+//$menuHover: #e8e8e8;
 
-//$subMenuBg:#1f2d3d;
-//$subMenuHover:#001528;
-$subMenuBg:#fff;
-$subMenuHover: #d81e06;
+$subMenuBg:#1f2d3d;
+$subMenuHover:#001528;
+//$subMenuBg:#fff;
+//$subMenuHover: #d81e06;
 
 $sideBarWidth: 210px;
 
-// the :export directive is the magic sauce for webpack
-// https://www.bluematador.com/blog/how-to-share-variables-between-js-and-sass
 :export {
   menuText: $menuText;
   menuActiveText: $menuActiveText;

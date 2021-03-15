@@ -37,20 +37,20 @@ export const constantRoutes = [
    */
   // 用户首页
   {
-    path: '/phone/home',
+    path: '/home',
     hidden: true,
-    name: '云购手机',
+    name: '智能交通',
     component: () => import('@/views/home/index'),
-    meta: { title: '云购手机' }
+    meta: { title: '智能交通' }
   },
 
   {
-    path:  '/phone/shopping',
-    hidden: true,
-    name: '云购手机购物车',
-    component: () => import('@/views/home/shopping'),
-    meta: { title: '云购手机购物车' }
-  },
+  path:  '/phone/shopping',
+  hidden: true,
+  name: '云购手机购物车',
+  component: () => import('@/views/home/shopping'),
+  meta: { title: '云购手机购物车' }
+},
 
   // 注册
   {
@@ -68,6 +68,14 @@ export const constantRoutes = [
     name: '云购手机登录',
     component: () => import('@/views/home/userLogin'),
     meta: { title: '云购手机登录' }
+  },
+ // login
+  {
+    path: '/ShowNewsInfo/:id',
+    hidden: true,
+    name: '详情',
+    component: () => import('@/views/home/ShowNewsInfo'),
+    meta: { title: '详情' }
   },
 
 

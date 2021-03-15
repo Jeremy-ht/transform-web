@@ -61,7 +61,7 @@ service.interceptors.response.use(
   error => {
     console.log('err' + error) // for debug
     Message({
-      message: '发生错误失败，请刷新页面',
+      message: '请重新刷新加载页面',
       type: 'error',
       duration: 5 * 1000
     })

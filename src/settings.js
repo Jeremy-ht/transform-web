@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: '云购手机商城',
+  title: '智能交通',
 
   /**
    * @type {boolean} true | false
