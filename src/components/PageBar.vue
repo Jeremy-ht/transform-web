@@ -3,7 +3,7 @@
     @size-change="handleSizeChange"
     @current-change="handleCurrentChange"
     :current-page="pageNum"
-    :page-sizes="[8, 15, 20]"
+    :page-sizes="[10, 15, 20]"
     :page-size="pageSize"
     layout="total, sizes, prev, pager, next, jumper"
     :total="pageTotal">
@@ -51,5 +51,6 @@
 <style scoped>
   .el-pagination {
     margin-top: 15px;
+    margin-left: 600px;
   }
 </style>

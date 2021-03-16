@@ -253,7 +253,8 @@
     <div class="contentCar" v-if="showIndex == 3">
 
       <div class="home-main" v-if="showToday">
-        <h3 @click="goMore">更多...</h3>
+        <div @click="goMore" style="color: #1d1d1d;margin-top: -10px;font-size:16px;cursor: pointer;">更多...</div>
+
         <el-card shadow="hover" class="home-main-div">
           <!--                 v-for="item in showNewsInfo" :key="item.id">-->
           <div class="el-card-div">
@@ -343,7 +344,7 @@
     getSceneryListByCate
   } from '../../api/common'
   import '../../assets/iconfont/iconfont'
-
+  import PageBar from '@/components/PageBar'
   export default {
     name: 'index',
     data() {
@@ -436,10 +437,14 @@
 
       }
     },
-    // created() {
-    //   this.init()
-    //
-    // },
+    components: {
+      PageBar
+
+    },
+    created() {
+      this.init()
+
+    },
     methods: {
 
       // 初始化

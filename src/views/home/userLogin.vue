@@ -113,7 +113,7 @@
 
       </div>
 
-      <div v-if="active == 2" class="login-div22">
+      <div v-if="active == 2" class="login-div22" style="height: 460px;">
 
         <div style="margin: 4px auto;color: black">
           <h3>智能交通平台注册</h3>
@@ -125,27 +125,31 @@
                    :model="registerForm">
 
             <el-form-item>
-              <el-input placeholder="车牌号" v-model="registerForm.uname"
+              <el-input placeholder="车牌号" v-model="registerForm.cph"
                         :autofocus="true"/>
             </el-form-item>
 
 
             <el-form-item>
-              <el-input type="password" placeholder="车辆颜色"
-                        v-model="registerForm.pwd"/>
+              <el-input placeholder="车辆颜色" v-model="registerForm.color"/>
             </el-form-item>
 
 
             <el-form-item>
-              <el-input placeholder="车辆图片" v-model="registerForm.phone"/>
+              <el-upload class="avatar-uploader"
+                         action="http://127.0.0.1:9000/upload/updataFile"
+                         :show-file-list="false"
+                         :on-success="handleAvatarSuccess">
+                <img v-if="registerForm.carimage !== ''" :src="registerForm.carimage" class="avatar">
+                <i v-else class="el-icon-plus avatar-uploader-icon"/>
+              </el-upload>
+              <span style="color: red">*</span> 上传车辆图片
             </el-form-item>
-
-
 
             <!-- 登录按钮 -->
             <el-form-item>
-              <div class="form-btn22" @click="registerGo2">
-                <div class="login-span"><i class="el-icon-right"></i>注册</div>
+              <div class="form-btn22" style="margin-top: -16px" @click="registerGo2">
+                <div class="login-span"> 注 册</div>
               </div>
             </el-form-item>
 
@@ -297,29 +301,29 @@
         }
 
         if (this.registerForm.phone.trim() == '') {
-            this.$notify({
-              title: '警告', message: '手机号不能为空', type: 'warning'
-            });
-            return
+          this.$notify({
+            title: '警告', message: '手机号不能为空', type: 'warning'
+          });
+          return
         }
 
         this.active = '2'
 
       },
 
-      registerGo2(){
+      registerGo2() {
 
-        if (this.registerForm.cph.trim() != ''||
-          this.registerForm.uname.color() != ''||
-          this.registerForm.uname.carimage() != '') {
-          this.$notify({
-            title: '警告', message: '车辆信息必须全部填写', type: 'warning'
-          });
-          return
-        }
+        // if (this.registerForm.cph.trim() != '' ||
+        //   this.registerForm.uname.color() != '' ||
+        //   this.registerForm.uname.carimage() != '') {
+        //   this.$notify({
+        //     title: '警告', message: '车辆信息必须全部填写', type: 'warning'
+        //   });
+        //   return
+        // }
 
 
-         addUser(this.registerForm).then(res => {
+        addUser(this.registerForm).then(res => {
           if (res.success) {
             this.$notify({message: '注册成功', type: 'success', duration: 2000})
             this.showLoginOr = true
@@ -511,4 +515,15 @@
     font-weight: 500;
     cursor: pointer;
   }
+
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 160px;
+    height: 160px;
+    line-height: 160px;
+    text-align: center;
+    border: 1.4px #d9d9d9 dashed;
+  }
+
 </style>

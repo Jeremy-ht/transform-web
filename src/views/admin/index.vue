@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container">
+  <div class="app-container" style="margin-top: 50px;" >
     <el-card class="box-card" shadow="hover">
       <!--新增按钮-->
       <el-button class="admin-add-btn" type="primary" size="mini" @click="addAdminBtn">新增员工</el-button>

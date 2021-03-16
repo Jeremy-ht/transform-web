@@ -1,9 +1,9 @@
 <template>
-  <div class="app-container">
+  <div class="app-container"  style="margin-top: 50px;" >
     <el-card class="box-card" shadow="hover">
 
       <!--表格-->
-      <el-table height="375" :data="userList" stripe style="width: 100%; margin-top: 10px" border>
+      <el-table  :data="userList" stripe size="mini" style="width: 100%; margin-top: 10px" border>
         <el-table-column label="#" type="index" align="center"/>
         <el-table-column label="用户名" prop="uname" align="center"/>
 
@@ -18,7 +18,7 @@
           </template>
         </el-table-column>
 
-        <el-table-column label="注册时间" align="center">
+        <el-table-column label="注册时间" align="center" width="170px">
           <template slot-scope="scope">
             <i class="el-icon-time"/>
             <span style="margin-left: 10px">{{ scope.row.creatime }}</span>
@@ -87,13 +87,7 @@
           if (res.success) {
             this.pageTotal = res.data.total
             this.userList = res.data.data
-            this.userList.forEach(item => {
-              if (item.email == '' || item.email == null) {
-                item.email = '- - -'
               }
-            })
-
-          }
         })
       },
 

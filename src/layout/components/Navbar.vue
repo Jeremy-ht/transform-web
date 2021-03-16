@@ -1,13 +1,13 @@
 <template>
   <div class="navbar">
-    <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar"/>
+    <hamburger style="color:  #532ad8" :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar"/>
 
-    <breadcrumb class="breadcrumb-container"/>
+<!--    <breadcrumb class="breadcrumb-container" style="color: white"/>-->
 
-    <div class="right-menu">
+    <div style="line-height: 50px;margin-left: 1100px">
       <el-dropdown class="avatar-container" trigger="click">
-        <div class="avatar-wrapper" >
-          欢迎，{{username}}
+        <div class="avatar-wrapper" style="color: white" >
+          {{username}}
 <!--          <img :src="icon" class="user-avatar">-->
 <!--          <i class="el-icon-caret-bottom"/>-->
         </div>
@@ -80,8 +80,11 @@
   .navbar {
     height: 50px;
     overflow: hidden;
-    position: relative;
-    background: #fff;
+    position: fixed;
+    z-index: 999;
+    width: 100%;
+    /*background:#532ad8;*/
+    background:#532ad8;
     box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
 
     .hamburger-container {
@@ -102,9 +105,10 @@
     }
 
     .right-menu {
-      float: right;
-      height: 100%;
+      /*height: 100%;*/
       line-height: 50px;
+      display: inline-block;
+      color: white;
 
       &:focus {
         outline: none;
@@ -133,7 +137,7 @@
 
         .avatar-wrapper {
           margin-top: 5px;
-          position: relative;
+          position: fixed;
           cursor: pointer;
 
           .user-avatar {
