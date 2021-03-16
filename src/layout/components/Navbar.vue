@@ -58,7 +58,7 @@
         let admin = JSON.parse(window.localStorage.getItem('AdminInfoFlower'))
         if (admin == undefined || admin == null || admin == '') {
           this.$router.push('/login')
-          this.$message({ message: '请先登录再操作', type: 'error', duration: 1700 })
+          this.$notify({ message: '请先登录再操作', type: 'error', duration: 1700 })
           return
         }
         this.icon = admin.icon

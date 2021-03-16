@@ -87,7 +87,7 @@
         //     this.logList = res.data.data
         //
         //   } else {
-        //     this.$message({ message: '获取系统日志列表失败', type: 'error', duration: 1700 })
+        //     this.$notify({ message: '获取系统日志列表失败', type: 'error', duration: 1700 })
         //   }
         //
         // })

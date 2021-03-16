@@ -6,28 +6,28 @@
       <el-table :data="allDetailList" stripe style="width: 100%; margin-top: 10px" border size="small">
 
         <el-table-column label="#" type="index" align="center"/>
-        <el-table-column label="手机名称" prop="name" align="center"/>
+        <el-table-column label="咨询标题" prop="newstitle" align="center"/>
 
 
-        <el-table-column label="图片" prop="image" align="center">
+        <el-table-column label="咨询图片" prop="image" align="center">
           <template slot-scope="scope">
-            <img style="width: 70px;height: 80px" :src="scope.row.image" alt="">
+            <img style="width: 70px;height: 80px" :src="scope.row.newscover" alt="">
           </template>
         </el-table-column>
 
 
 
-        <el-table-column label="品牌分类" prop="categoryname" align="center" width="120px"/>
+<!--        <el-table-column label="咨询内容" prop="categoryname" align="center" width="120px"/>-->
 
-        <el-table-column label="手机价格" prop="price" align="center" width="120px">
-          <template slot-scope="scope">
-            <span style="margin-left: 10px;color: #ca141d;">{{ '￥ '+scope.row.price + '.00'}}</span>
-          </template>
-        </el-table-column>
+<!--        <el-table-column label="手机价格" prop="price" align="center" width="120px">-->
+<!--          <template slot-scope="scope">-->
+<!--            <span style="margin-left: 10px;color: #ca141d;">{{ '￥ '+scope.row.price + '.00'}}</span>-->
+<!--          </template>-->
+<!--        </el-table-column>-->
 
-        <el-table-column label="上架时间" align="center" width="170px">>
+        <el-table-column label="发布时间" align="center" width="170px">>
           <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.creatime}}</span>
+            <span style="margin-left: 10px">{{ scope.row.releasetime}}</span>
           </template>
         </el-table-column>
 
@@ -70,7 +70,7 @@
 
 <script>
   import PageBar from '@/components/PageBar'
-  import { getSceneryList, pullScenery2, delScenery, disableComment } from '../../api/common'
+  import { getSceneryList,delInfo,getInfoList, pullScenery2, delScenery, disableComment } from '../../api/common'
 
   export default {
 
@@ -107,44 +107,26 @@
       async getInit() {
         let admin = JSON.parse(window.localStorage.getItem('AdminInfoFlower'))
         if (admin == undefined || admin == null || admin == '') {
+          this.$notify({ message: '对不起，请您先登录系统', type: 'error', duration: 1700 })
           this.$router.push('/login')
-          this.$message({ message: '请登录', type: 'error', duration: 1700 })
           return
         } else {
           this.adminInfo = admin
         }
 
+
         let params = {
           pagenum: this.pagenum,
           pagesize: this.pagesize
         }
-        await getSceneryList(params, 0).then(res => {
+        await getInfoList(1, params).then(res => {
           this.myDetailList = []
-          if (res.success && res.data.data.length != 0) {
-            this.pageMyTotal = res.data.total
-            this.myDetailList = res.data.data
-          } else {
-            this.$message({
-              message: '获取列表失败，请刷新再试!',
-              type: 'error', duration: 1700
-            })
-          }
-        })
-
-        // 全部列表
-        let paramsAll = {
-          pagenum: this.pagenum,
-          pagesize: this.pagesize
-        }
-        await getSceneryList(paramsAll, 0, 2, 0).then(res => {
-          this.allDetailList = []
           if (res.success && res.data.data.length != 0) {
             this.pageTotal = res.data.total
             this.allDetailList = res.data.data
-
           } else {
-            this.$message({
-              message: '获取列表失败，请刷新再试!',
+            this.$notify({
+              message: '获取失败，请刷新',
               type: 'error', duration: 1700
             })
           }
@@ -153,15 +135,6 @@
       },
 
       // 分页
-      handleSizeChangeMy(pagesize) {
-        this.pagesizeMy = pagesize
-        this.getInit()
-      },
-      handleCurrentChangeMy(pagenum) {
-        this.pagenumMy = pagenum
-        this.getInit()
-      },
-
       handleSizeChange(pagesize) {
         this.pagesize = pagesize
         this.getInit()
@@ -172,7 +145,6 @@
       },
 
       pullDetail(id) {
-
         this.$confirm('是否确定发布?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -180,18 +152,16 @@
         }).then(() => {
           pullScenery2(id).then(res => {
             if (res.success) {
-              this.$message({ message: '发布成功', type: 'success', duration: 1700 })
+              this.$notify({ message: '发布成功', type: 'success', duration: 1700 })
               this.getInit()
             } else {
-              this.$message({ message: '发布失败', type: 'error', duration: 1700 })
+              this.$notify({ message: '发布失败', type: 'error', duration: 1700 })
             }
           })
         })
 
       },
 
-      updDetail(id) {
-      },
 
       delDetailBtn(id) {
         this.$confirm('确定删除吗?', '提示', {
@@ -199,12 +169,12 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          delScenery(id).then(res => {
+          delInfo(id).then(res => {
             if (res.success) {
-              this.$message({ message: '成功', type: 'success', duration: 1700 })
+              this.$notify({ message: '删除成功', type: 'success', duration: 1700 })
               this.getInit()
             } else {
-              this.$message({ message: '删除失败', type: 'error', duration: 1700 })
+              this.$notify({ message: '删除失败', type: 'error', duration: 1700 })
 
             }
           })
@@ -223,7 +193,7 @@
           if (res.success) {
             this.getInit()
           } else {
-            this.$message({ message: '删除失败', type: 'error', duration: 1700 })
+            this.$notify({ message: '删除失败', type: 'error', duration: 1700 })
 
           }
         })

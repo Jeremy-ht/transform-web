@@ -146,7 +146,7 @@
         let admin = JSON.parse(window.localStorage.getItem('AdminInfoFlower'))
         if (admin == undefined || admin == null || admin == '') {
           this.$router.push('/login')
-          this.$message({message: '未登录', type: 'error', duration: 1700})
+          this.$notify({message: '未登录', type: 'error', duration: 1700})
           return
         } else {
           this.adminInfo = admin
@@ -162,7 +162,7 @@
         //     this.pageMyTotal = res.data.total
         //     this.myDetailList = res.data.data
         //   } else {
-        //     this.$message({
+        //     this.$notify({
         //       message: '获取列表失败，请刷新再试!',
         //       type: 'error', duration: 1700
         //     })
@@ -181,7 +181,7 @@
             this.allDetailList = res.data.data
             console.log(this.allDetailList);
           } else {
-            this.$message({
+            this.$notify({
               message: '获取列表失败，请刷新再试!',
               type: 'error', duration: 1700
             })
@@ -218,17 +218,14 @@
         }).then(() => {
           pullScenery2(id).then(res => {
             if (res.success) {
-              this.$message({message: '发布成功', type: 'success', duration: 1700})
+              this.$notify({message: '发布成功', type: 'success', duration: 1700})
               this.getInit()
             } else {
-              this.$message({message: '发布失败', type: 'error', duration: 1700})
+              this.$notify({message: '发布失败', type: 'error', duration: 1700})
             }
           })
         })
 
-      },
-
-      updDetail(id) {
       },
 
       delDetailBtn(id) {
@@ -239,11 +236,10 @@
         }).then(() => {
           delScenery(id).then(res => {
             if (res.success) {
-              this.$message({message: '成功', type: 'success', duration: 1700})
+              this.$notify({message: '删除成功', type: 'success', duration: 1700})
               this.getInit()
             } else {
-              this.$message({message: '删除失败', type: 'error', duration: 1700})
-
+              this.$notify({message: '删除失败', type: 'error', duration: 1700})
             }
           })
         })
@@ -260,7 +256,7 @@
           if (res.success) {
             this.getInit()
           } else {
-            this.$message({message: '删除失败', type: 'error', duration: 1700})
+            this.$notify({message: '删除失败', type: 'error', duration: 1700})
 
           }
         })
@@ -273,7 +269,7 @@
 
       addIndexShow(id) {
         if (this.imageShow == '') {
-          this.$message({message: '封面图不能为空', type: 'error', duration: 1700})
+          this.$notify({message: '封面图不能为空', type: 'error', duration: 1700})
           return
         }
 
@@ -288,7 +284,7 @@
             this.addDialogVisible = false
             this.imageShow = ''
           } else {
-            this.$message({message: '添加失败', type: 'error', duration: 1700})
+            this.$notify({message: '添加失败', type: 'error', duration: 1700})
 
           }
         })
@@ -306,7 +302,7 @@
         if (res.success) {
           this.imageShow = res.data.location
         } else {
-          this.$message({message: '上传失败，请重新上传', type: 'error', duration: 1700})
+          this.$notify({message: '上传失败，请重新上传', type: 'error', duration: 1700})
         }
 
       }

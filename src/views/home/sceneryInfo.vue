@@ -230,7 +230,7 @@
           if (res.success) {
             this.detailInfo = res.data.data
           } else {
-            this.$message({message: '详情获取失败，请刷新再试！', type: 'error', duration: 2000})
+            this.$notify({message: '详情获取失败，请刷新再试！', type: 'error', duration: 2000})
           }
 
         })
@@ -242,7 +242,7 @@
             this.oList = res.data.data
             console.log(this.oList)
           } else {
-            this.$message({
+            this.$notify({
               message: '数据获取失败，请刷新重试',
               type: 'error', duration: 2000
             })
@@ -284,7 +284,7 @@
             if (res.success) {
               this.addressList = res.data.data
             } else {
-              this.$message({message: res.message, type: 'error', duration: 1700})
+              this.$notify({message: res.message, type: 'error', duration: 1700})
             }
 
           })
@@ -296,7 +296,7 @@
 
       submitOrder() {
         if (this.addressid == 0 || this.addressid == '') {
-          this.$message({message: '请选择地址', type: 'error', duration: 1700})
+          this.$notify({message: '请选择地址', type: 'error', duration: 1700})
           return false
         }
 
@@ -311,11 +311,11 @@
 
         addOrder2(order).then(res => {
           if (res.success) {
-            this.$message({message: '购买成功', type: 'success', duration: 2000})
+            this.$notify({message: '购买成功', type: 'success', duration: 2000})
             this.init()
             this.showOrder = false
           } else {
-            this.$message({message: '购买失败，刷新再试', type: 'error', duration: 2000})
+            this.$notify({message: '购买失败，刷新再试', type: 'error', duration: 2000})
 
           }
         })
@@ -327,7 +327,7 @@
       goShopping() {
         // 是否登录
         if (!this.loginIs()) {
-          this.$message({message: '请先登录', type: 'error', duration: 1700})
+          this.$notify({message: '请先登录', type: 'error', duration: 1700})
           return false
         }
 
@@ -350,7 +350,7 @@
       addCart(id) {
         // 是否登录
         if (!this.loginIs()) {
-          this.$message({message: '请先登录', type: 'error', duration: 1700})
+          this.$notify({message: '请先登录', type: 'error', duration: 1700})
           const {href} = this.$router.resolve({path: '/phone/login'})
           window.open(href, '_blank')
           return
@@ -363,10 +363,10 @@
         }
         addCart(cart).then(res => {
           if (res.success) {
-            this.$message({message: '加入购物车成功', type: 'success', duration: 2000})
+            this.$notify({message: '加入购物车成功', type: 'success', duration: 2000})
             this.num = 1
           } else {
-            this.$message({
+            this.$notify({
               message: '添加购物车失败，请刷新再试！',
               type: 'error',
               duration: 2000
@@ -379,7 +379,7 @@
 
       addCommentBtn() {
         if (this.addComment == '') {
-          this.$message({message: '请输入评论内容', type: 'error', duration: 1700})
+          this.$notify({message: '请输入评论内容', type: 'error', duration: 1700})
           return
         }
 
@@ -395,9 +395,9 @@
             this.init()
             this.dilog = false
             this.addComment = ''
-            this.$message({message: '评论成功', type: 'success', duration: 1700})
+            this.$notify({message: '评论成功', type: 'success', duration: 1700})
           } else {
-            this.$message({message: '评论失败', type: 'error', duration: 1700})
+            this.$notify({message: '评论失败', type: 'error', duration: 1700})
           }
         })
 

@@ -78,12 +78,12 @@
     methods: {
       login() {
         if (this.loginForm.username.trim() == '') {
-          this.$message({ message: '用户名不能为空', type: 'error', duration: 1700 })
+          this.$notify({ message: '用户名不能为空', type: 'error', duration: 1700 })
           return
         }
 
         if (this.loginForm.password.trim() == '') {
-          this.$message({ message: '密码不能为空', type: 'error', duration: 1700 })
+          this.$notify({ message: '密码不能为空', type: 'error', duration: 1700 })
           return
         }
         adminLogin(this.loginForm).then(res => {
@@ -91,7 +91,7 @@
             window.localStorage.setItem('AdminInfoFlower', JSON.stringify(res.data.data))
             this.$router.push({ path: '/' })
           } else {
-            this.$message({ message: res.message, type: 'error', duration: 1700 })
+            this.$notify({ message: res.message, type: 'error', duration: 1700 })
 
           }
 

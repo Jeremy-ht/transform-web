@@ -242,23 +242,60 @@
 
         </el-card>
 
+
+        <!--分页-->
+        <page-bar :pageTotal="pageTotal" :pageNum="pagenum" :pageSize="pagesize"
+                  @handleSizeChange="handleSizeChange" @handleCurrentChange="handleCurrentChange"/>
       </div>
 
     </div>
 
     <div class="contentCar" v-if="showIndex == 3">
 
-      <!--主体部分 新闻列表-->
-      <div class="home-main">
+      <div class="home-main" v-if="showToday">
+        <h3 @click="goMore">更多...</h3>
         <el-card shadow="hover" class="home-main-div">
           <!--                 v-for="item in showNewsInfo" :key="item.id">-->
           <div class="el-card-div">
 
             <!--左侧图片区域-->
             <div class="left-img">
-<!--              <img style="border-radius: 2.5%;width: 273px;height: 153px;"-->
-<!--                   src="https://dimg11.c-ctrip.com/images/020691200082co240B8EA_R_300_120.jpg"/>-->
-              <div id="image" style="border-radius: 2.5%;width: 140px;height:140px;">
+              <!--              <img style="border-radius: 2.5%;width: 273px;height: 153px;"-->
+              <!--                   src="https://dimg11.c-ctrip.com/images/020691200082co240B8EA_R_300_120.jpg"/>-->
+              <div class="image2" style="border-radius: 2.5%;width: 140px;height:140px;">
+              </div>
+            </div>
+
+            <!--右侧内容区域-->
+            <div class="right-content2">
+              <div class="right-content-title" style="font-size: 28px">
+                2021-03-04
+              </div>
+
+              <div class="right-content-content">
+                fasdfgsdfgsead
+              </div>
+              <div class="right-content-date">
+                <span>今日道路</span>
+              </div>
+
+            </div>
+          </div>
+        </el-card>
+
+      </div>
+
+
+      <div class="home-main" v-if="!showToday">
+        <el-card shadow="hover" class="home-main-div">
+          <!--                 v-for="item in showNewsInfoAll" :key="item.id">-->
+          <div class="el-card-div">
+
+            <!--左侧图片区域-->
+            <div class="left-img">
+              <!--              <img style="border-radius: 2.5%;width: 273px;height: 153px;"-->
+              <!--                   src="https://dimg11.c-ctrip.com/images/020691200082co240B8EA_R_300_120.jpg"/>-->
+              <div class="image2" style="border-radius: 2.5%;width: 140px;height:140px;">
               </div>
             </div>
 
@@ -279,7 +316,6 @@
           </div>
 
         </el-card>
-
       </div>
 
     </div>
@@ -291,8 +327,20 @@
 <script>
   import {
     fourList,
-    getCategoryList, getUserList, getSceneryIndex, getShoppingNum,
-    getSceneryList, getrotationList, updUserInfo, getSearchContent, adminLogin, userLogin, addUser, getSceneryListByCate
+    getCategoryList,
+    getTodayList,
+    getSceneryIndex,
+    getShoppingNum,
+    getSceneryList,
+    getTodayListToday,
+    getInfoList,
+    getrotationList,
+    updUserInfo,
+    getSearchContent,
+    adminLogin,
+    userLogin,
+    addUser,
+    getSceneryListByCate
   } from '../../api/common'
   import '../../assets/iconfont/iconfont'
 
@@ -308,17 +356,6 @@
           return cb()
         }
         cb(new Error('请输入合法的手机号'))
-      }
-
-      // 验证邮箱的规则
-      let checkEmail = (rule, value, cb) => {
-        // 验证邮箱的正则表达式
-        const regEmail = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/
-        if (regEmail.test(value)) {
-          // 合法的邮箱
-          return cb()
-        }
-        cb(new Error('请输入合法的邮箱'))
       }
 
       return {
@@ -368,36 +405,11 @@
               {min: 3, max: 16, message: '长度在 3 到 16 个字符', trigger: 'blur'}
             ]
         },
-        //表单验证
-        loginFormRules2: {
-          uname:
-            [
-              {required: true, message: '请输入用户名', trigger: 'blur'},
-              {min: 3, max: 50, message: '长度在 3 到 50 个字符', trigger: 'blur'}
-            ],
-          pwd:
-            [
-              {required: true, message: '请输入密码', trigger: 'blur'},
-              {min: 3, max: 16, message: '长度在 3 到 16 个字符', trigger: 'blur'}
-            ],
-          phone: [
-            {required: true, message: '请输入手机号', trigger: 'blur'},
-            {validator: checkMobile, trigger: 'blur'}
-          ]
-        },
-        // 注册表单
-        registerForm: {
-          uname: '',
-          pwd: '',
-          sex: '1',
-          phone: '',
-          email: ''
-        },
+
 
         showLogin: false,
 
         // 购物车
-        showShopping: false,
         shoppingNum: 0,
 
         // phone
@@ -408,8 +420,19 @@
         searchList: [],
 
         showNewsInfo: [],
+        showNewsInfoToday: [],
+        showNewsInfoAll: [],
+
         dialogImageUrl: '',
         dialogVisible: false,
+
+        showToday: true,
+
+        // 分页查询
+        pagenum: 1,
+        pagesize: 10,
+        pageTotal: 0,
+
 
       }
     },
@@ -418,13 +441,6 @@
     //
     // },
     methods: {
-      handleRemove(file, fileList) {
-        console.log(file, fileList);
-      },
-      handlePictureCardPreview(file) {
-        this.dialogImageUrl = file.url;
-        this.dialogVisible = true;
-      },
 
       // 初始化
       async init() {
@@ -433,61 +449,66 @@
         if (!this.loginIs()) {
           this.showLogin = false
         } else {
-          // 购物车商品数量
-          await getShoppingNum(this.UserInfo.id).then(res => {
-            if (res.success) {
-              this.shoppingNum = res.data.data
-
-            } else {
-              this.$message({
-                message: '数据获取失败，请刷新重试',
-                type: 'error', duration: 2000
-              })
-            }
-          })
           this.showLogin = true
         }
 
-        // 3分类
-        await getSceneryIndex().then(res => {
-          if (res.success) {
-
-            let data = res.data.data
-            for (let key in data) {
-              this.showLists.push(data[key])
-              this.cate.push(key)
-            }
-            console.log(this.showLists)
-          } else {
-            this.$message({message: '数据获取失败,请刷新!', type: 'error', duration: 2000})
-          }
-
-        })
-
-        // 4
-        await fourList().then(res => {
-          if (res.success) {
-            this.fourList = res.data.data
-
-          } else {
-            this.$message({message: '数据获取失败,请刷新!', type: 'error', duration: 2000})
-          }
-
-        })
-
-        // 获取导航菜单  放入更多里面
         let params = {
+          pagenum: this.pagenum,
+          pagesize: this.pagesize
+        }
+        // 交通咨询
+        await getInfoList(1, params).then(res => {
+          if (res.success) {
+            this.showNewsInfo = res.data.data
+          } else {
+            this.$notify({message: '数据获取失败,请刷新!', type: 'error', duration: 2000})
+          }
+
+        })
+
+
+        // 当天
+        await getTodayListToday().then(res => {
+          if (res.success) {
+            this.showNewsInfoToday = res.data.data
+          } else {
+            this.$notify({message: '数据获取失败,请刷新!', type: 'error', duration: 2000})
+          }
+
+        })
+
+      },
+
+
+      async goMore() {
+        let p = {
           pagenum: 1,
           pagesize: 100
         }
-        await getCategoryList(params).then(res => {
+        await getTodayList(p).then(res => {
           if (res.success) {
-            this.cateList = res.data.data
+            this.showNewsInfoAll = res.data.data
+
+          } else {
+            this.$notify({message: '数据获取失败,请刷新!', type: 'error', duration: 2000})
           }
+
         })
 
-
+        this.showToday = false
       },
+
+
+      // 分页
+      handleSizeChange(pagesize) {
+        this.pagesize = pagesize
+        this.getInit()
+      },
+      handleCurrentChange(pagenum) {
+        this.pagenum = pagenum
+        this.getInit()
+      },
+
 
       // 点击新闻跳转页面查看新闻详细信息
       hrefNewsInfo(newInfo) {
@@ -507,29 +528,6 @@
         return text
       },
 
-      // 全部商品
-      allShop() {
-        this.showIndex = '2'
-
-        let params = {
-          pagenum: 1,
-          pagesize: 100
-        }
-
-        getSceneryList(params, 777).then(res => {
-
-          if (res.success) {
-            this.otherList = res.data.data
-          } else {
-            this.$message({
-              message: '数据获取失败,请刷新!',
-              type: 'error', duration: 2000
-            })
-          }
-        })
-
-      },
-
       // 是否登录
       loginIs() {
         // 是否登录
@@ -540,29 +538,6 @@
           this.UserInfo = user
           return true
         }
-
-      },
-
-      getcateList(key) {
-
-        let params = {
-          pagenum: 1,
-          pagesize: 100
-        }
-
-        getSceneryList(params, key).then(res => {
-          console.log(res)
-          if (res.success) {
-            this.otherList = []
-            this.otherList = res.data.data
-
-          } else {
-            this.$message({
-              message: '数据获取失败,请刷新!',
-              type: 'error', duration: 2000
-            })
-          }
-        })
 
       },
 
@@ -588,7 +563,7 @@
             this.searchList = res.data.data
 
           } else {
-            this.$message({
+            this.$notify({
               message: '换个搜索方式吧！',
               type: 'error', duration: 2300
             })
@@ -617,9 +592,7 @@
         } else if (id == 3) {
           // 违章信息
           if (!this.loginIs()) {
-            this.$notify({
-              title: '警告', message: '请先登录系统', type: 'warning'
-            });
+            this.$notify({title: '警告', message: '请先登录系统', type: 'warning'});
           } else {
 
 
@@ -645,7 +618,7 @@
       goLoginTo() {
         // 是否登录
         if (!this.loginIs()) {
-          // this.$message({ message: '请先登录', type: 'error', duration: 1700 })
+          // this.$notify({ message: '请先登录', type: 'error', duration: 1700 })
           this.goLogin()
           return false
         }
@@ -701,7 +674,7 @@
           window.localStorage.setItem('UserInfo', JSON.stringify(this.UserInfo))
           this.UserInfo = JSON.parse(window.localStorage.getItem('UserInfo'))
         } else {
-          this.$message({message: '头像上传失败，请重新上传', type: 'error', duration: 1700})
+          this.$notify({message: '头像上传失败，请重新上传', type: 'error', duration: 1700})
         }
 
       },
@@ -1064,9 +1037,10 @@
   .home-main-div:hover {
     border-color: #E6A23C;
   }
+
   .home-main-div {
     margin-top: 10px;
-background-color: #f9f9f9;
+    background-color: #f9f9f9;
     width: 100%;
     height: 193px;
     /*border: 1px #F9FFFB solid;*/
@@ -1101,7 +1075,7 @@ background-color: #f9f9f9;
     padding-left: 34px;
   }
 
-  .right-content2{
+  .right-content2 {
     width: 75%;
     height: 153px;
     /*border: 1px blue solid;*/
@@ -1144,7 +1118,7 @@ background-color: #f9f9f9;
     margin-left: 10px;
   }
 
-  #image{
+  .image2 {
     background-image: url("../../assets/日历.png");
     /*margin: auto;*/
     background-repeat: no-repeat;

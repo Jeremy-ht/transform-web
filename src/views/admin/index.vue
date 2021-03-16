@@ -170,7 +170,7 @@
             this.adminList = res.data.data
 
           } else {
-            this.$message({ message: '员工列表失败', type: 'error', duration: 1700 })
+            this.$notify({ message: '员工列表失败', type: 'error', duration: 1700 })
           }
 
         })
@@ -182,7 +182,7 @@
         // 是否登录
         let admin = JSON.parse(window.localStorage.getItem('AdminInfoFlower'))
         if (admin == undefined || admin == null || admin == '') {
-          this.$message({ message: '请先登录', type: 'error', duration: 1700 })
+          this.$notify({ message: '请先登录', type: 'error', duration: 1700 })
           this.$router.push({ path: '/login' })
         } else {
           this.addAdminInfo.creator = admin.id
@@ -212,9 +212,9 @@
           if (res.success) {
             this.addDialogVisible = false
             this.getAdminList()
-            this.$message({ message: '新增员工成功', type: 'success', duration: 1700 })
+            this.$notify({ message: '新增员工成功', type: 'success', duration: 1700 })
           } else {
-            this.$message({ message: '新增员工失败', type: 'error', duration: 1700 })
+            this.$notify({ message: '新增员工失败', type: 'error', duration: 1700 })
           }
 
         })
@@ -224,7 +224,7 @@
       // 删除
       delUserBtn(id) {
         if (id == this.adminInfo.id) {
-          this.$message({ message: '此账号为当前登录账号', type: 'error', duration: 1700 })
+          this.$notify({ message: '此账号为当前登录账号', type: 'error', duration: 1700 })
           return false
         }
 
@@ -236,9 +236,9 @@
           delAdmin(id).then(res => {
             if (res.success) {
               this.getAdminList()
-              this.$message({ message: '删除员工成功', type: 'success', duration: 1700 })
+              this.$notify({ message: '删除员工成功', type: 'success', duration: 1700 })
             } else {
-              this.$message({ message: '删除员工失败', type: 'error', duration: 1700 })
+              this.$notify({ message: '删除员工失败', type: 'error', duration: 1700 })
             }
           })
         })

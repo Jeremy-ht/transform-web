@@ -440,3 +440,85 @@ export function getOrderList(params) {
     params
   })
 }
+
+
+/**
+ * =========
+ *  交通咨询
+ * =========
+ */
+// 添加  state==7 保存   state==1发布
+export function addInfo(params) {
+  return request({
+    url: baseURL + `/infos/addInfo`,
+    method: 'post',
+    data: params
+  })
+}
+
+// 删除
+export function delInfo(id) {
+  return request({
+    url: baseURL + `/infos/delInfo/${id}`,
+    method: 'get'
+  })
+}
+
+// state==7 保存   state==1发布
+export function pullInfo(id, state) {
+  return request({
+    url: baseURL + `/infos/pullInfo/${id}/${state}`,
+    method: 'get'
+  })
+}
+
+// 查询 1-所有
+export function getInfoList(id, params) {
+  return request({
+    url: baseURL + `/infos/getInfoList/${id}`,
+    method: 'get',
+    params
+  })
+}
+
+
+/**
+ * =========
+ *  今日道路
+ * =========
+ */
+// 添加
+export function addToday(params) {
+  return request({
+    url: baseURL + `/today/addToday`,
+    method: 'post',
+    data: params
+  })
+}
+
+// 删除
+export function delToday(id) {
+  return request({
+    url: baseURL + `/today/delToday/${id}`,
+    method: 'get'
+  })
+}
+
+
+// 查询
+export function getTodayList(params) {
+  return request({
+    url: baseURL + `/today/getTodayList`,
+    method: 'get',
+    params
+  })
+}
+
+// 查询
+export function getTodayListToday() {
+  return request({
+    url: baseURL + `/today/getTodayListToday`,
+    method: 'get'
+  })
+}
+

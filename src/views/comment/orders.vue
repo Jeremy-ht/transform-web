@@ -90,7 +90,7 @@
             this.pageTotal = res.data.total
             this.orderList = res.data.data
           } else {
-            this.$message({ message: '获取交易列表失败', type: 'error', duration: 1700 })
+            this.$notify({ message: '获取交易列表失败', type: 'error', duration: 1700 })
 
           }
         })
@@ -117,9 +117,9 @@
           disableComment(id, 1).then(res => {
             if (res.success) {
               this.getCommonList()
-              this.$message({ message: '评论已显示', type: 'success', duration: 1700 })
+              this.$notify({ message: '评论已显示', type: 'success', duration: 1700 })
             } else {
-              this.$message({ message: res.message, type: 'error', duration: 1700 })
+              this.$notify({ message: res.message, type: 'error', duration: 1700 })
             }
           })
         })
@@ -136,9 +136,9 @@
           disableComment(id, 2).then(res => {
             if (res.success) {
               this.getCommonList()
-              this.$message({ message: '评论已隐藏', type: 'success', duration: 1700 })
+              this.$notify({ message: '评论已隐藏', type: 'success', duration: 1700 })
             } else {
-              this.$message({ message: res.message, type: 'error', duration: 1700 })
+              this.$notify({ message: res.message, type: 'error', duration: 1700 })
             }
           })
         })

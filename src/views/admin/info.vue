@@ -63,7 +63,7 @@
         let admin = JSON.parse(window.localStorage.getItem('AdminInfoFlower'))
         if (admin == undefined || admin == null || admin == '') {
           this.$router.push('/login')
-          this.$message({ message: '请先登录再操作系统', type: 'error', duration: 1700 })
+          this.$notify({ message: '请先登录再操作系统', type: 'error', duration: 1700 })
           return
         }
         admin.infoId = String(admin.id).length > 4 ? admin.id
@@ -75,14 +75,14 @@
       submitPwd(id) {
         updPasswordById(id, this.pwd).then(res => {
           if (res.success) {
-            this.$message({ message: '修改密码成功', type: 'success', duration: 1700 })
+            this.$notify({ message: '修改密码成功', type: 'success', duration: 1700 })
             this.pwd = {
               password: '',
               newPassword: ''
             }
 
           } else {
-            this.$message({ message: res.message, type: 'error', duration: 1700 })
+            this.$notify({ message: res.message, type: 'error', duration: 1700 })
           }
         })
 

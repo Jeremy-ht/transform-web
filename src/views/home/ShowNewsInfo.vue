@@ -120,11 +120,11 @@
             this.commentInfo.commentary = ''
             this.getCommentList()
           } else {
-            this.$message({message: '评论失败', type: 'error', duration: 1700})
+            this.$notify({message: '评论失败', type: 'error', duration: 1700})
           }
 
         }).catch(res => {
-          this.$message({message: '评论失败', type: 'error', duration: 1700})
+          this.$notify({message: '评论失败', type: 'error', duration: 1700})
         })
       },
 
@@ -149,11 +149,11 @@
             this.commentList = res.data.data
             this.pageTotal = res.data.total
           } else {
-            this.$message({message: '获取评论列表失败', type: 'error', duration: 1700})
+            this.$notify({message: '获取评论列表失败', type: 'error', duration: 1700})
           }
 
         }).catch(res => {
-          this.$message({message: '获取评论列表失败', type: 'error', duration: 1700})
+          this.$notify({message: '获取评论列表失败', type: 'error', duration: 1700})
         })
       }
 

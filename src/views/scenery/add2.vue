@@ -3,8 +3,8 @@
     <el-form :model="addDetail" ref="ruleForm" label-width="140px" class="detail-form">
 
 
-      <el-form-item label="标题">
-        <el-input v-model="addDetail.newstitle" show-word-limit class="textarea base-width-50"/>
+      <el-form-item label="发布人">
+        <el-input v-model="addDetail.author"/>
       </el-form-item>
 
       <el-form-item label="内容" prop="content">
@@ -13,28 +13,8 @@
       </el-form-item>
 
 
-      <el-form-item label="咨询热度">
-        <el-radio-group v-model="addDetail.newshot">
-          <el-radio label="1">普通咨询</el-radio>
-          <el-radio label="2">热点咨询</el-radio>
-        </el-radio-group>
-      </el-form-item>
-
-
-      <el-form-item label="图片">
-        <el-upload class="avatar-uploader"
-                   action="http://127.0.0.1:9000/upload/updataFile"
-                   :show-file-list="false"
-                   :on-success="handleAvatarSuccess">
-          <img v-if="addDetail.image !== ''" :src="addDetail.image" class="avatar">
-          <i v-else class="el-icon-plus avatar-uploader-icon"/>
-        </el-upload>
-      </el-form-item>
-
-
       <el-form-item style="text-align: left;margin-top: 80px">
         <el-button type="success" @click="submitForm">发布</el-button>
-        <el-button type="success" @click="submitForm2">保存</el-button>
       </el-form-item>
     </el-form>
 
@@ -42,25 +22,18 @@
 </template>
 
 <script>
-  import {getCategoryList, uploadFile, addInfo} from '../../api/common'
+  import {getCategoryList, uploadFile, addToday} from '../../api/common'
   import '../../assets/iconfont/iconfont'
   import Editor from '@tinymce/tinymce-vue'
 
-  let addDetailInfo = {
-    newstitle: '',
-    newscontent: '',
-    newshot: 1,
-    author: '',
-    state: 1,
-    newscover: ''
-  }
-
   export default {
-    name: 'add',
+    name: 'add2',
     data() {
       return {
-        addDetail: addDetailInfo,
-        cateList: [],    // 分类列表
+        addDetail: {
+          content: '',
+          author: ''
+        },
 
         adminInfo: {},
 
@@ -110,18 +83,6 @@
 
         this.loginIs()
 
-        // 获取分类
-        let params = {
-          pagenum: 1,
-          pagesize: 100
-        }
-        getCategoryList(params).then(res => {
-          if (res.success) {
-            this.cateList = res.data.data
-
-          }
-        })
-
       },
 
       // 是否登录 Admin
@@ -142,23 +103,14 @@
 
       // 校验
       checkForm() {
-        if (this.addDetail.newstitle == '') {
-          this.$notify({message: '请添加标题', type: 'error', duration: 1700})
-          return false
-        }
-
-        if (this.addDetail.newscontent == '') {
+        if (this.addDetail.content == '') {
           this.$notify({message: '请添加详情', type: 'error', duration: 1700})
           return false
         }
 
-        // if (this.addDetail.newscover == '') {
-        //   this.$notify({message: '请添加图片', type: 'error', duration: 1700})
-        //   return false
-        // }
-
         return true
       },
+
 
       // 发布
       submitForm() {
@@ -166,9 +118,7 @@
           return false;
         }
 
-        this.addDetail.state = 1
-
-        addInfo(this.addDetail).then(res => {
+        addToday(this.addDetail).then(res => {
           if (res.success) {
             this.$notify({message: '添加成功', type: 'success', duration: 1700})
             this.resetForm()
@@ -178,45 +128,15 @@
         })
       },
 
-      // 保存
-      submitForm2() {
-        if (!this.checkForm()) {
-          return false;
-        }
-
-        this.addDetail.state = 7
-
-        addInfo(this.addDetail).then(res => {
-          if (res.success) {
-            this.$notify({message: '添加成功', type: 'success', duration: 1700})
-            this.resetForm()
-          } else {
-            this.$notify({message: '添加失败', type: 'error', duration: 1700})
-          }
-        })
-      },
 
       // 重置表单
       resetForm() {
         this.addDetail = {
-          newstitle: '',
-          newscontent: '',
-          newshot: 1,
-          author: '',
-          state: 1,
-          newscover: ''
+          content: '',
+          author: ''
         }
       },
 
-      // 封面上传成功
-      handleAvatarSuccess(res, file) {
-        if (res.success) {
-          this.addDetail.newscover = res.data.location
-        } else {
-          this.$notify({message: '封面上传失败，请重新上传', type: 'error', duration: 1700})
-        }
-
-      }
 
     }
   }

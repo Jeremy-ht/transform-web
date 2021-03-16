@@ -90,7 +90,7 @@
         //   if (res.success) {
         //     this.home = res.data.data
         //   } else {
-        //     this.$message({ message: '获取数据失败', type: 'error', duration: 1700 })
+        //     this.$notify({ message: '获取数据失败', type: 'error', duration: 1700 })
         //   }
         //
         // })

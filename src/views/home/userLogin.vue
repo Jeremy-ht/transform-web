@@ -59,7 +59,7 @@
     <div style="margin: 0 auto;width: 1100px;height: 100%;display: flex;flex-direction: column" v-if="!showLoginOr">
 
       <div style="width: 800px;margin: 0 auto">
-        <el-steps v-if="active== '1'" :active="1" finish-status="success" simple style="margin-top: 4px">
+        <el-steps v-if="active== 1" :active="1" finish-status="success" simple style="margin-top: 4px">
           <el-step title="第一步 填写个人信息">
           </el-step>
           <el-step title="第二步 填写车辆信息"></el-step>
@@ -119,31 +119,33 @@
           <h3>智能交通平台注册</h3>
         </div>
 
-        <!-- 登录表单 -->
+
         <div class="register-form">
-          <el-form ref="loginFormRef" label-position="right"
-                   :model="registerForm" :rules="loginFormRules2">
-            <!--用户名-->
+          <el-form label-position="right"
+                   :model="registerForm">
+
             <el-form-item>
-              <el-input placeholder="用户名" v-model="registerForm.uname"
+              <el-input placeholder="车牌号" v-model="registerForm.uname"
                         :autofocus="true"/>
             </el-form-item>
 
-            <!--密码-->
+
             <el-form-item>
-              <el-input type="password" placeholder="密码"
+              <el-input type="password" placeholder="车辆颜色"
                         v-model="registerForm.pwd"/>
             </el-form-item>
 
-            <!--手机号-->
-            <el-form-item prop="phone">
-              <el-input placeholder="手机号" v-model="registerForm.phone"/>
+
+            <el-form-item>
+              <el-input placeholder="车辆图片" v-model="registerForm.phone"/>
             </el-form-item>
+
+
 
             <!-- 登录按钮 -->
             <el-form-item>
-              <div class="form-btn22" @click="registerGo">
-                <div class="login-span"><i class="el-icon-right"></i>&nbsp;下一步</div>
+              <div class="form-btn22" @click="registerGo2">
+                <div class="login-span"><i class="el-icon-right"></i>注册</div>
               </div>
             </el-form-item>
 
@@ -222,7 +224,10 @@
           pwd: '',
           sex: '1',
           phone: '',
-          email: '',
+          cph: '',
+          color: '',
+          carimage: '',
+          jf: 12,
         },
 
         active: '1',
@@ -263,7 +268,7 @@
             window.localStorage.setItem('UserInfoPhone', JSON.stringify(res.data.data))
             this.$router.push({path: '/home'})
           } else {
-            this.$message({message: res.message, type: 'error', duration: 1700})
+            this.$notify({message: res.message, type: 'error', duration: 1700})
 
           }
 
@@ -291,40 +296,48 @@
           return
         }
 
-        // if (this.registerForm.phone.trim() == '') {
-        //     this.$notify({
-        //       title: '警告', message: '手机号不能为空', type: 'warning'
-        //     });
-        //     return
-        // }
+        if (this.registerForm.phone.trim() == '') {
+            this.$notify({
+              title: '警告', message: '手机号不能为空', type: 'warning'
+            });
+            return
+        }
 
         this.active = '2'
 
-        // await addUser(this.registerForm).then(res => {
-        //   if (res.success) {
-        //     this.$message({message: res.message, type: 'success', duration: 2000})
-        //     // res.data.data.pwd = ''
-        //     // res.data.data.salt = ''
-        //     // window.localStorage.setItem('UserInfo', JSON.stringify(res.data.data))
-        //     this.loginForm2.uname = res.data.data
-        //     console.log(res.data.data)
-        //     this.showLoginOr = true
-        //   } else {
-        //     this.$message({message: res.message, type: 'error', duration: 2000})
-        //
-        //   }
-        // })
-
       },
 
-      //重置
-      resetLoginForm() {
-        this.$refs.loginFormRef.resetFields()
+      registerGo2(){
+
+        if (this.registerForm.cph.trim() != ''||
+          this.registerForm.uname.color() != ''||
+          this.registerForm.uname.carimage() != '') {
+          this.$notify({
+            title: '警告', message: '车辆信息必须全部填写', type: 'warning'
+          });
+          return
+        }
+
+
+         addUser(this.registerForm).then(res => {
+          if (res.success) {
+            this.$notify({message: '注册成功', type: 'success', duration: 2000})
+            this.showLoginOr = true
+          } else {
+            this.$notify({message: '注册失败', type: 'error', duration: 2000})
+
+          }
+        })
       },
 
-      //重置
-      resetLoginForm2() {
-        this.$refs.loginFormRef.resetFields()
+      // 封面上传成功
+      handleAvatarSuccess(res, file) {
+        if (res.success) {
+          this.registerForm.carimage = res.data.location
+        } else {
+          this.$notify({message: '封面上传失败，请重新上传', type: 'error', duration: 1700})
+        }
+
       }
 
     }

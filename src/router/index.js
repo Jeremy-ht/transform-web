@@ -88,36 +88,6 @@ export const constantRoutes = [
     meta: { title: '手机详情' }
   },
 
-  /**
-   * 手机管理
-   */
-  {
-    path: '/phone',
-    component: Layout,
-    redirect: '/phone/list',
-    name: '手机管理',
-    meta: { title: '手机管理', icon: 'el-icon-s-cooperation' },
-    children: [
-      {
-        path: 'show',
-        name: '手机列表',
-        component: () => import('@/views/scenery/list'),
-        meta: { title: '商品列表', icon: 'table' }
-      },
-      {
-        path: 'add',
-        name: '手机添加',
-        component: () => import('@/views/scenery/add'),
-        meta: { title: '商品添加', icon: 'table' }
-      },
-      {
-        path: 'category',
-        name: '品牌分类',
-        component: () => import('@/views/scenery/category'),
-        meta: { title: '品牌分类', icon: 'table' }
-      }
-    ]
-  },
 
 
 
@@ -164,15 +134,66 @@ export const constantRoutes = [
     children: [
       {
         path: 'admin',
-        name: 'admin',
+        name: '员工列表',
         component: () => import('@/views/admin/index'),
         meta: { title: '员工列表', icon: 'table' }
       },
       {
         path: 'user',
-        name: 'user',
+        name: '用户列表',
         component: () => import('@/views/user/index'),
         meta: { title: '用户列表', icon: 'table' }
+      }
+    ]
+  },
+
+  {
+    path: '/infos',
+    component: Layout,
+    redirect: '/infos/list',
+    name: '交通咨询',
+    meta: { title: '交通咨询', icon: 'el-icon-s-cooperation' },
+    children: [
+      {
+        path: 'list',
+        name: '咨询列表',
+        component: () => import('@/views/scenery/list'),
+        meta: { title: '咨询列表', icon: 'table' }
+      },
+      {
+        path: 'add',
+        name: '添加咨询',
+        component: () => import('@/views/scenery/add'),
+        meta: { title: '添加咨询', icon: 'table' }
+      },
+      {
+        path: 'category',
+        name: '发布咨询',
+        component: () => import('@/views/scenery/category'),
+        meta: { title: '发布咨询', icon: 'table' }
+      }
+    ]
+  },
+
+
+  {
+    path: '/today',
+    component: Layout,
+    redirect: '/list',
+    name: '今日道路',
+    meta: { title: '今日道路', icon: 'el-icon-s-tools' },
+    children: [
+      {
+        path: 'todays',
+        name: '今日详情',
+        component: () => import('@/views/scenery/add2'),
+        meta: { title: '今日详情', icon: 'table' }
+      },
+      {
+        path: 'list',
+        name: '道路列表',
+        component: () => import('@/views/scenery/list2'),
+        meta: { title: '道路列表', icon: 'table' }
       }
     ]
   },

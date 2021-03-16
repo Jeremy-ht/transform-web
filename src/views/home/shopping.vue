@@ -267,7 +267,7 @@
 
         // 是否登录
         if (!this.loginIs()) {
-          this.$message({message: '请先登录', type: 'error', duration: 1700})
+          this.$notify({message: '请先登录', type: 'error', duration: 1700})
           adminInfo
           return false
         } else {
@@ -288,7 +288,7 @@
           if (res.success) {
             this.addressList = res.data.data
           } else {
-            this.$message({message: res.message, type: 'error', duration: 1700})
+            this.$notify({message: res.message, type: 'error', duration: 1700})
           }
 
         })
@@ -318,7 +318,7 @@
           if (res.success) {
             this.otherList = res.data.data
           } else {
-            this.$message({
+            this.$notify({
               message: '数据获取失败,请刷新!',
               type: 'error', duration: 2000
             })
@@ -344,7 +344,7 @@
       goShopping() {
         // 是否登录
         if (!this.loginIs()) {
-          this.$message({message: '请先登录', type: 'error', duration: 1700})
+          this.$notify({message: '请先登录', type: 'error', duration: 1700})
           return false
         }
 
@@ -375,7 +375,7 @@
       showOrderGo() {
 
         if (this.totalPrice == 0) {
-          this.$message({message: '请挑选需要结算的商品', type: 'error', duration: 1700})
+          this.$notify({message: '请挑选需要结算的商品', type: 'error', duration: 1700})
           return
         }
 
@@ -384,7 +384,7 @@
       },
       submitOrder() {
         if (this.addressid == 0 || this.addressid == '') {
-          this.$message({message: '请选择地址', type: 'error', duration: 1700})
+          this.$notify({message: '请选择地址', type: 'error', duration: 1700})
           return false
         }
 
@@ -402,11 +402,11 @@
 
         addOrder(order).then(res => {
           if (res.success) {
-            this.$message({message: '购买成功', type: 'success', duration: 2000})
+            this.$notify({message: '购买成功', type: 'success', duration: 2000})
             this.init()
             this.showOrder = false
           } else {
-            this.$message({message: '购买失败，刷新再试', type: 'error', duration: 2000})
+            this.$notify({message: '购买失败，刷新再试', type: 'error', duration: 2000})
 
           }
         })
@@ -429,7 +429,7 @@
             if (res.success) {
               this.init()
             } else {
-              this.$message({message: '删除失败，刷新再试', type: 'error', duration: 2000})
+              this.$notify({message: '删除失败，刷新再试', type: 'error', duration: 2000})
 
             }
           })

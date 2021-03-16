@@ -239,7 +239,7 @@
 
         // 是否登录
         if (!this.loginIs()) {
-          this.$message({message: '请先登录', type: 'error', duration: 1700})
+          this.$notify({message: '请先登录', type: 'error', duration: 1700})
           this.$router.push('/phone/login')
           return false
         }
@@ -250,7 +250,7 @@
             this.addressList = res.data.data
             console.log(this.addressList)
           } else {
-            this.$message({message: res.message, type: 'error', duration: 1700})
+            this.$notify({message: res.message, type: 'error', duration: 1700})
           }
 
         })
@@ -301,20 +301,20 @@
 
       submitPwd(id) {
         if (this.pwd.newPassword == '') {
-          this.$message({message: '不能为空', type: 'error', duration: 1700})
+          this.$notify({message: '不能为空', type: 'error', duration: 1700})
           return false
         }
 
         updPasswordById(id, this.pwd).then(res => {
           if (res.success) {
-            this.$message({message: '成功修改密码', type: 'success', duration: 1700})
+            this.$notify({message: '成功修改密码', type: 'success', duration: 1700})
             this.pwd = {
               password: '',
               newPassword: ''
             }
 
           } else {
-            this.$message({message: res.message, type: 'error', duration: 1700})
+            this.$notify({message: res.message, type: 'error', duration: 1700})
           }
         })
 
@@ -348,14 +348,14 @@
       goAddAddress() {
 
         if (this.UserInfo.id == 0) {
-          this.$message({message: '请重新登录', type: 'error', duration: 1700})
+          this.$notify({message: '请重新登录', type: 'error', duration: 1700})
           return
         }
 
         if (this.addressInfo.name == ''
           || this.addressInfo.phone == ''
           || this.addressInfo.address == ''  ) {
-          this.$message({message: '地址填写不完整', type: 'error', duration: 1700})
+          this.$notify({message: '地址填写不完整', type: 'error', duration: 1700})
           return
         }
 
@@ -367,10 +367,10 @@
         }
         addAddress(address).then(res => {
           if (res.success) {
-            // this.$message({ message: '成功添加', type: 'success', duration: 1700 })
+            // this.$notify({ message: '成功添加', type: 'success', duration: 1700 })
             this.init()
           } else {
-            this.$message({message: '添加失败', type: 'error', duration: 1700})
+            this.$notify({message: '添加失败', type: 'error', duration: 1700})
           }
         })
 
