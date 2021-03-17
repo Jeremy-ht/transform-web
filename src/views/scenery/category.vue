@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container">
+  <div class="app-container" style="margin-top: 50px;" >
     <el-card class="box-card" shadow="hover">
 
       <!--表格-->
@@ -11,31 +11,30 @@
 
         <el-table-column label="咨询图片" prop="image" align="center">
           <template slot-scope="scope">
-            <img style="width: 70px;height: 80px" :src="scope.row.newscover" alt="">
+            <img style="width: 90px;height: 60px":src="scope.row.newscover" alt="">
           </template>
         </el-table-column>
 
+        <el-table-column label="创建者" prop="author"  align="center"/>
 
         <el-table-column label="创建时间" align="center" width="170px">>
           <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.createtime}}</span>
+            <span style="margin-left: 10px"><i class="el-icon-date"/>{{' '+ scope.row.creatime}}</span>
           </template>
         </el-table-column>
 
 
-        <el-table-column label="状态" align="center" width="200px">
-          <template slot-scope="scope">
-           草稿
-          </template>
+        <el-table-column label="状态" align="center" width="170px">
+            <el-tag type="warning">待发布</el-tag>
         </el-table-column>
 
 
-        <el-table-column label="操作" align="center" width="100px">
+        <el-table-column label="操作" align="center" width="170px">
           <template slot-scope="scope">
-            <div style="color: red;cursor: pointer" @click="pullDetail(scope.row.id)">
+            <div style="color: gold;cursor: pointer;display:inline-block" @click="pullDetail(scope.row.id)">
              发布
             </div>
-            <div style="color: red;cursor: pointer" @click="delDetailBtn(scope.row.id)">
+            <div style="color: red;cursor: pointer;display:inline-block;margin-left: 20px" @click="delDetailBtn(scope.row.id)">
               删除
             </div>
           </template>
@@ -104,15 +103,10 @@
           pagesize: this.pagesize
         }
         await getInfoList(7, params).then(res => {
-          this.myDetailList = []
+          this.allDetailList = []
           if (res.success && res.data.data.length != 0) {
             this.pageTotal = res.data.total
             this.allDetailList = res.data.data
-          } else {
-            this.$notify({
-              message: '获取失败，请刷新 ',
-              type: 'error', duration: 1700
-            })
           }
         })
 

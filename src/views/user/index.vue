@@ -1,16 +1,16 @@
 <template>
-  <div class="app-container"  style="margin-top: 50px;" >
+  <div class="app-container" style="margin-top: 50px;">
     <el-card class="box-card" shadow="hover">
 
       <!--表格-->
-      <el-table  :data="userList" stripe size="mini" style="width: 100%; margin-top: 10px" border>
+      <el-table :data="userList" stripe size="mini" style="width: 100%; margin-top: 10px" border>
         <el-table-column label="#" type="index" align="center"/>
         <el-table-column label="用户名" prop="uname" align="center"/>
 
 
-        <el-table-column label="联系方式" prop="phone" align="center" />
-        <el-table-column label="车牌号" prop="cph" align="center" />
-        <el-table-column label="车辆颜色" prop="color" align="center" />
+        <el-table-column label="联系方式" prop="phone" align="center"/>
+        <el-table-column label="车牌号" prop="cph" align="center"/>
+        <el-table-column label="车辆颜色" prop="color" align="center"/>
 
         <el-table-column label="车辆图片" prop="carimage" align="center">
           <template slot-scope="scope">
@@ -32,10 +32,10 @@
         </el-table-column>
 
 
-        <el-table-column label="操作" align="center" width="100px">
+        <el-table-column label="操作" align="center" width="120px">
           <template slot-scope="scope">
             <el-button class="admin-add-btn" type="primary" size="mini"
-                       @click="getWZ(scope.row.id)">查看违章
+                       @click="getWZ(scope.row.id)"><i class="el-icon-circle-plus-outline"></i> &nbsp;查看违章
             </el-button>
           </template>
         </el-table-column>
@@ -54,7 +54,7 @@
 
 <script>
   import PageBar from '@/components/PageBar'
-  import { getUserList, disableUserById, ableUserById } from '../../api/common'
+  import {getUserList, disableUserById, ableUserById} from '../../api/common'
 
   export default {
 
@@ -85,9 +85,10 @@
         }
         getUserList(params).then(res => {
           if (res.success) {
+            console.log(res.data.data)
             this.pageTotal = res.data.total
             this.userList = res.data.data
-              }
+          }
         })
       },
 
@@ -111,9 +112,9 @@
           disableUserById(id).then(res => {
             if (res.success) {
               this.getUserList()
-              this.$notify({ message: res.message, type: 'success', duration: 1700 })
+              this.$notify({message: res.message, type: 'success', duration: 1700})
             } else {
-              this.$notify({ message: res.message, type: 'error', duration: 1700 })
+              this.$notify({message: res.message, type: 'error', duration: 1700})
             }
           })
         })
@@ -121,7 +122,7 @@
       },
 
       // 获取违章信息
-      getWZ(id){
+      getWZ(id) {
 
 
       },
@@ -137,9 +138,9 @@
           ableUserById(id).then(res => {
             if (res.success) {
               this.getUserList()
-              this.$notify({ message: res.message, type: 'success', duration: 1700 })
+              this.$notify({message: res.message, type: 'success', duration: 1700})
             } else {
-              this.$notify({ message: res.message, type: 'error', duration: 1700 })
+              this.$notify({message: res.message, type: 'error', duration: 1700})
             }
           })
         })

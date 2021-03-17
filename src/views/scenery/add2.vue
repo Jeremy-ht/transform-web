@@ -1,10 +1,10 @@
 <template>
-  <div class="app-container">
+  <div class="app-container" style="margin-top: 50px;" >
     <el-form :model="addDetail" ref="ruleForm" label-width="140px" class="detail-form">
 
 
       <el-form-item label="发布人">
-        <el-input v-model="addDetail.author"/>
+        <el-input v-model="addDetail.author" disabled style="width: 300px" />
       </el-form-item>
 
       <el-form-item label="内容" prop="content">
@@ -13,8 +13,9 @@
       </el-form-item>
 
 
-      <el-form-item style="text-align: left;margin-top: 80px">
-        <el-button type="success" @click="submitForm">发布</el-button>
+      <el-form-item style="text-align: left;margin-top: 50px">
+        <el-button type="success" style="margin-left: 400px" @click="submitForm"><i class="el-icon-upload"></i>&nbsp;&nbsp;
+          发布</el-button>
       </el-form-item>
     </el-form>
 
@@ -94,7 +95,7 @@
           return false
         } else {
           this.adminInfo = admin
-          this.addDetail.author = admin.name
+          this.addDetail.author = admin.username
           return true
         }
 

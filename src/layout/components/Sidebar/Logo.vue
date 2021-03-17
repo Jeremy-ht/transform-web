@@ -71,7 +71,7 @@
     width: 100%;
     height: 50px;
     /*line-height: 50px;*/
-    background:  #532ad8;
+    background:  #409EFF;
     text-align: center;
 
   }
@@ -108,7 +108,7 @@
     width: 100%;
     height: 50px;
     /*line-height: 50px;*/
-    background: #532ad8;
+    background: #409EFF;
     text-align: center;
     overflow: hidden;
 

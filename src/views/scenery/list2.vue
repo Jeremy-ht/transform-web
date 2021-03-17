@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container">
+  <div class="app-container" style="margin-top: 50px;" >
     <el-card class="box-card" shadow="hover">
 
       <!--表格-->
@@ -54,7 +54,7 @@
 
         // 分页查询
         pagenum: 1,
-        pagesize: 8,
+        pagesize: 10,
         pageTotal: 0,
 
         myDetailList: [],
@@ -88,15 +88,10 @@
           pagesize: this.pagesize
         }
         await getTodayList(params).then(res => {
-          this.myDetailList = []
-          if (res.success && res.data.data.length != 0) {
+          console.log(res)
+          if (res.success) {
             this.pageTotal = res.data.total
             this.allDetailList = res.data.data
-          } else {
-            this.$notify({
-              message: '获取失败，请刷新',
-              type: 'error', duration: 1700
-            })
           }
         })
 

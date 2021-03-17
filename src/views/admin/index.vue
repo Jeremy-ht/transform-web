@@ -2,7 +2,9 @@
   <div class="app-container" style="margin-top: 50px;" >
     <el-card class="box-card" shadow="hover">
       <!--新增按钮-->
-      <el-button class="admin-add-btn" type="primary" size="mini" @click="addAdminBtn">新增员工</el-button>
+      <el-button class="admin-add-btn" type="primary" size="mini" @click="addAdminBtn">
+        <i class="el-icon-plus"></i>&nbsp;&nbsp;添加
+      </el-button>
 
       <!--表格-->
       <el-table height="375" :data="adminList" stripe style="width: 100%; margin-top: 10px" border size="small">
@@ -256,7 +258,7 @@
 <style>
   .admin-add-btn {
     margin-bottom: 10px;
-    float: left;
+    float: right;
   }
 
   /* ======= */

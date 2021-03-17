@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container">
+  <div class="app-container" style="margin-top: 50px;" >
     <el-form :model="addDetail" ref="ruleForm" label-width="140px" class="detail-form">
 
 
@@ -15,8 +15,8 @@
 
       <el-form-item label="咨询热度">
         <el-radio-group v-model="addDetail.newshot">
-          <el-radio label="1">普通咨询</el-radio>
-          <el-radio label="2">热点咨询</el-radio>
+          <el-radio label="1">普通 </el-radio>
+          <el-radio label="2">热点 </el-radio>
         </el-radio-group>
       </el-form-item>
 
@@ -26,15 +26,15 @@
                    action="http://127.0.0.1:9000/upload/updataFile"
                    :show-file-list="false"
                    :on-success="handleAvatarSuccess">
-          <img v-if="addDetail.image !== ''" :src="addDetail.image" class="avatar">
+          <img v-if="addDetail.newscover !== ''" :src="addDetail.newscover" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"/>
         </el-upload>
       </el-form-item>
 
 
-      <el-form-item style="text-align: left;margin-top: 80px">
-        <el-button type="success" @click="submitForm">发布</el-button>
-        <el-button type="success" @click="submitForm2">保存</el-button>
+      <el-form-item style="text-align: left;margin-top: 60px">
+        <el-button type="success" @click="submitForm"><i class="el-icon-upload"></i>&nbsp;&nbsp;发布</el-button>
+        <el-button style="margin-left: 100px" type="success" @click="submitForm2"><i class="el-icon-check"></i>&nbsp;&nbsp;保存</el-button>
       </el-form-item>
     </el-form>
 
@@ -49,7 +49,7 @@
   let addDetailInfo = {
     newstitle: '',
     newscontent: '',
-    newshot: 1,
+    newshot: "1",
     author: '',
     state: 1,
     newscover: ''
@@ -133,7 +133,7 @@
           return false
         } else {
           this.adminInfo = admin
-          this.addDetail.author = admin.name
+          this.addDetail.author = admin.username
           return true
         }
 
@@ -170,10 +170,11 @@
 
         addInfo(this.addDetail).then(res => {
           if (res.success) {
-            this.$notify({message: '添加成功', type: 'success', duration: 1700})
+            this.$notify({message: '发布成功', type: 'success', duration: 1700})
             this.resetForm()
+            this.init()
           } else {
-            this.$notify({message: '添加失败', type: 'error', duration: 1700})
+            this.$notify({message: '发布失败', type: 'error', duration: 1700})
           }
         })
       },
@@ -188,10 +189,11 @@
 
         addInfo(this.addDetail).then(res => {
           if (res.success) {
-            this.$notify({message: '添加成功', type: 'success', duration: 1700})
+            this.$notify({message: '保存成功', type: 'success', duration: 1700})
             this.resetForm()
+            this.init()
           } else {
-            this.$notify({message: '添加失败', type: 'error', duration: 1700})
+            this.$notify({message: '保存失败', type: 'error', duration: 1700})
           }
         })
       },
@@ -201,8 +203,7 @@
         this.addDetail = {
           newstitle: '',
           newscontent: '',
-          newshot: 1,
-          author: '',
+          newshot: "1",
           state: 1,
           newscover: ''
         }
@@ -247,8 +248,8 @@
 
 
   .avatar {
-    width: 160px;
-    height: 160px;
+    width: 273px;
+    height: 153px;
     margin: 4px auto;
     display: block;
     border-radius: 2.5%;
@@ -257,33 +258,32 @@
   /* ======= */
   /* 上传图片 */
   /* ======= */
-  /deep/ .avatar-uploader .el-upload:hover {
-    border-color: #5a98de;
-  }
+  /*/deep/ .avatar-uploader .el-upload:hover {*/
+  /*  !*border-color: #5a98de;*!*/
+  /*}*/
 
   /deep/ .avatar-uploader-icon {
     font-size: 28px;
-    /*width: 220px;*/
-    height: 160px;
-    line-height: 160px;
-    color: #5a98de;
+    width: 273px;
+    height: 153px;
+    line-height: 153px;
     text-align: center;
-    border: 2px #5a98de dashed;
+    border: solid 1px #adadad;
   }
 
-  /deep/ .el-switch.is-checked .el-switch__core {
-    border-color: #5a98de;
-    background-color: #5a98de;
-  }
+  /*/deep/ .el-switch.is-checked .el-switch__core {*/
+  /*  border-color: #5a98de;*/
+  /*  background-color: #5a98de;*/
+  /*}*/
 
-  /deep/ .el-radio__input.is-checked + .el-radio__label {
-    color: #5a98de;
-  }
+  /*/deep/ .el-radio__input.is-checked + .el-radio__label {*/
+  /*  color: #5a98de;*/
+  /*}*/
 
-  /deep/ .el-radio__input.is-checked .el-radio__inner {
-    border-color: #5a98de;
-    background: #5a98de;
-  }
+  /*/deep/ .el-radio__input.is-checked .el-radio__inner {*/
+  /*  border-color: #5a98de;*/
+  /*  background: #5a98de;*/
+  /*}*/
 
   .base-width-50 {
     width: 50%

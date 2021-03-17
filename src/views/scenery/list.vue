@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container">
+  <div class="app-container" style="margin-top: 50px;" >
     <el-card class="box-card" shadow="hover">
 
       <!--表格-->
@@ -11,7 +11,8 @@
 
         <el-table-column label="咨询图片" prop="image" align="center">
           <template slot-scope="scope">
-            <img style="width: 70px;height: 80px" :src="scope.row.newscover" alt="">
+
+            <img style="width: 90px;height: 60px" :src="scope.row.newscover" alt="">
           </template>
         </el-table-column>
 
@@ -24,13 +25,17 @@
 <!--            <span style="margin-left: 10px;color: #ca141d;">{{ '￥ '+scope.row.price + '.00'}}</span>-->
 <!--          </template>-->
 <!--        </el-table-column>-->
+        <el-table-column label="发布者" prop="author"  align="center"/>
 
         <el-table-column label="发布时间" align="center" width="170px">>
           <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.releasetime}}</span>
+            <span style="margin-left: 10px"><i class="el-icon-date"/>{{' '+ scope.row.releasetime}}</span>
           </template>
         </el-table-column>
 
+        <el-table-column label="状态" align="center" width="170px">
+            <el-tag type="success">已发布</el-tag>
+        </el-table-column>
 
 
 
@@ -120,15 +125,9 @@
           pagesize: this.pagesize
         }
         await getInfoList(1, params).then(res => {
-          this.myDetailList = []
           if (res.success && res.data.data.length != 0) {
             this.pageTotal = res.data.total
             this.allDetailList = res.data.data
-          } else {
-            this.$notify({
-              message: '获取失败，请刷新',
-              type: 'error', duration: 1700
-            })
           }
         })
 

@@ -4,24 +4,24 @@
 
 <!--    <breadcrumb class="breadcrumb-container" style="color: white"/>-->
 
-    <div style="line-height: 50px;margin-left: 1100px">
-      <el-dropdown class="avatar-container" trigger="click">
-        <div class="avatar-wrapper" style="color: white" >
-          {{username}}
-<!--          <img :src="icon" class="user-avatar">-->
-<!--          <i class="el-icon-caret-bottom"/>-->
-        </div>
-        <el-dropdown-menu slot="dropdown" class="user-dropdown">
-<!--          <router-link :to="{path:'/admin/info'}">-->
-<!--            <el-dropdown-item>个人中心</el-dropdown-item>-->
-<!--          </router-link>-->
+<!--    <div style="line-height: 50px;margin-left: 1100px">-->
+<!--      <el-dropdown class="avatar-container" trigger="click">-->
+<!--        <div class="avatar-wrapper" style="color: white" >-->
+<!--          {{username}}-->
+<!--&lt;!&ndash;          <img :src="icon" class="user-avatar">&ndash;&gt;-->
+<!--&lt;!&ndash;          <i class="el-icon-caret-bottom"/>&ndash;&gt;-->
+<!--        </div>-->
+<!--        <el-dropdown-menu slot="dropdown" class="user-dropdown">-->
+<!--&lt;!&ndash;          <router-link :to="{path:'/admin/info'}">&ndash;&gt;-->
+<!--&lt;!&ndash;            <el-dropdown-item>个人中心</el-dropdown-item>&ndash;&gt;-->
+<!--&lt;!&ndash;          </router-link>&ndash;&gt;-->
 
-          <el-dropdown-item divided @click.native="logout">
-            <span style="display:block;">退出</span>
-          </el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
-    </div>
+<!--          <el-dropdown-item divided @click.native="logout">-->
+<!--            <span style="display:block;">退出</span>-->
+<!--          </el-dropdown-item>-->
+<!--        </el-dropdown-menu>-->
+<!--      </el-dropdown>-->
+<!--    </div>-->
   </div>
 </template>
 
@@ -84,7 +84,7 @@
     z-index: 999;
     width: 100%;
     /*background:#532ad8;*/
-    background:#532ad8;
+    background:#409EFF;
     box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
 
     .hamburger-container {

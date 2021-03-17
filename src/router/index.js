@@ -29,7 +29,7 @@ export const constantRoutes = [
       path: 'dashboard',
       name: '首页',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: '首页', icon: 'el-icon-s-home' }
+      meta: {title: '首页', icon: 'el-icon-s-home'}
     }]
   },
   /**
@@ -41,16 +41,16 @@ export const constantRoutes = [
     hidden: true,
     name: '智能交通',
     component: () => import('@/views/home/index'),
-    meta: { title: '智能交通' }
+    meta: {title: '智能交通'}
   },
 
   {
-  path:  '/phone/shopping',
-  hidden: true,
-  name: '云购手机购物车',
-  component: () => import('@/views/home/shopping'),
-  meta: { title: '云购手机购物车' }
-},
+    path: '/phone/shopping',
+    hidden: true,
+    name: '云购手机购物车',
+    component: () => import('@/views/home/shopping'),
+    meta: {title: '云购手机购物车'}
+  },
 
   // 注册
   {
@@ -58,7 +58,7 @@ export const constantRoutes = [
     hidden: true,
     name: '云购手机个人中心',
     component: () => import('@/views/home/person'),
-    meta: { title: '云购手机个人中心' }
+    meta: {title: '云购手机个人中心'}
   },
 
   // login
@@ -67,15 +67,15 @@ export const constantRoutes = [
     hidden: true,
     name: '云购手机登录',
     component: () => import('@/views/home/userLogin'),
-    meta: { title: '云购手机登录' }
+    meta: {title: '云购手机登录'}
   },
- // login
+  // login
   {
     path: '/ShowNewsInfo/:id',
     hidden: true,
     name: '详情',
     component: () => import('@/views/home/ShowNewsInfo'),
-    meta: { title: '详情' }
+    meta: {title: '详情'}
   },
 
 
@@ -85,10 +85,8 @@ export const constantRoutes = [
     hidden: true,
     name: '手机详情',
     component: () => import('@/views/home/sceneryInfo'),
-    meta: { title: '手机详情' }
+    meta: {title: '手机详情'}
   },
-
-
 
 
   /**
@@ -105,72 +103,97 @@ export const constantRoutes = [
         path: 'info',
         name: '个人中心',
         component: () => import('@/views/admin/info'),
-        meta: { title: '个人中心' }
+        meta: {title: '个人中心'}
 
       }
     ]
   },
 
 
-  {
-    path: '/one',
-    component: Layout,
-    children: [
-      {
-        path: 'four',
-        name: '首页管理',
-        component: () => import('@/views/scenery/four'),
-        meta: { title: '首页管理', icon: 'el-icon-s-claim' }
-      }
-    ]
-  },
+  // {
+  //   path: '/one',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'four',
+  //       name: '首页管理',
+  //       component: () => import('@/views/scenery/four'),
+  //       meta: { title: '首页管理', icon: 'el-icon-s-claim' }
+  //     }
+  //   ]
+  // },
 
   {
-    path: '/system',
+    path: '/admin',
     component: Layout,
-    redirect: '/admin',
-    name: '系统管理',
-    meta: { title: '系统管理', icon: 'el-icon-s-tools' },
     children: [
       {
         path: 'admin',
-        name: '员工列表',
+        name: '系统管理',
         component: () => import('@/views/admin/index'),
-        meta: { title: '员工列表', icon: 'table' }
-      },
+        meta: {title: '系统管理', icon: 'el-icon-s-claim'}
+      }
+    ]
+  },
+  {
+    path: '/user',
+    component: Layout,
+    children: [
       {
         path: 'user',
         name: '用户列表',
         component: () => import('@/views/user/index'),
-        meta: { title: '用户列表', icon: 'table' }
+        meta: {title: '用户列表', icon: 'el-icon-s-claim'}
       }
     ]
   },
+
+  // {
+  //   path: '/system',
+  //   component: Layout,
+  //   redirect: '/admin',
+  //   name: '系统管理',
+  //   meta: { title: '系统管理', icon: 'el-icon-s-tools' },
+  //   children: [
+  //     {
+  //       path: 'admin',
+  //       name: '员工列表',
+  //       component: () => import('@/views/admin/index'),
+  //       meta: { title: '员工列表', icon: 'table' }
+  //     },
+  //     {
+  //       path: 'user',
+  //       name: '用户列表',
+  //       component: () => import('@/views/user/index'),
+  //       meta: { title: '用户列表', icon: 'table' }
+  //     }
+  //   ]
+  // },
 
   {
     path: '/infos',
     component: Layout,
     redirect: '/infos/list',
     name: '交通咨询',
-    meta: { title: '交通咨询', icon: 'el-icon-s-cooperation' },
+    meta: {title: '交通咨询', icon: 'el-icon-s-cooperation'},
     children: [
       {
         path: 'list',
         name: '咨询列表',
         component: () => import('@/views/scenery/list'),
-        meta: { title: '咨询列表', icon: 'table' }
+        meta: {title: '咨询列表', icon: 'table'}
+      },
+      {
+        path: 'pull',
+        name: '发布咨询',
+        component: () => import('@/views/scenery/category'),
+        meta: {title: '发布咨询', icon: 'table'}
       },
       {
         path: 'add',
         name: '添加咨询',
         component: () => import('@/views/scenery/add'),
-        meta: { title: '添加咨询', icon: 'table' }
-      },
-      {
-        path: 'category',
-        name: '发布咨询',
-        component: () => import('@/views/scenery/category'),
-        meta: { title: '发布咨询', icon: 'table' }
+        meta: {title: '添加咨询', icon: 'table'}
       }
     ]
   },
@@ -181,19 +204,19 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/list',
     name: '今日道路',
-    meta: { title: '今日道路', icon: 'el-icon-s-tools' },
+    meta: {title: '今日道路', icon: 'el-icon-s-tools'},
     children: [
       {
         path: 'todays',
         name: '今日详情',
         component: () => import('@/views/scenery/add2'),
-        meta: { title: '今日详情', icon: 'table' }
+        meta: {title: '今日详情', icon: 'table'}
       },
       {
         path: 'list',
         name: '道路列表',
         component: () => import('@/views/scenery/list2'),
-        meta: { title: '道路列表', icon: 'table' }
+        meta: {title: '道路列表', icon: 'table'}
       }
     ]
   },
@@ -237,13 +260,13 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/chart/cate',
     name: '数据展示',
-    meta: { title: '数据展示', icon: 'el-icon-s-marketing' },
+    meta: {title: '数据展示', icon: 'el-icon-s-marketing'},
     children: [
       {
         path: 'cate',
         name: '品牌统计',
         component: () => import('@/views/chart/user'),
-        meta: { title: '品牌统计', icon: 'table' }
+        meta: {title: '品牌统计', icon: 'table'}
       }
       // , {
       //   path: 'order',
@@ -291,12 +314,12 @@ export const constantRoutes = [
   //   ]
   // },
 
-  { path: '*', redirect: '/404', hidden: true }
+  {path: '*', redirect: '/404', hidden: true}
 ]
 
 const createRouter = () => new Router({
   // mode: 'history', // require service support
-  scrollBehavior: () => ({ y: 0 }),
+  scrollBehavior: () => ({y: 0}),
   mode: 'history',
   routes: constantRoutes
 })

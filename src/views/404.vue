@@ -15,7 +15,7 @@
         <div class="bullshit__headline">{{ message }}</div>
 <!--        <div class="bullshit__info">Please check that the URL you entered is correct, or click the button below to return to the homepage.</div>-->
         <router-link to="/login">
-        <a href="#" class="bullshit__return-home">Go Login</a>
+<!--        <a href="#" class="bullshit__return-home">Go Login</a>-->
         </router-link>
       </div>
     </div>
