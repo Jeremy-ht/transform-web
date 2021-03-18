@@ -121,30 +121,28 @@
 
     <div class="contentCar" v-if="showIndex == 2">
 
-      <!--主体部分 新闻列表-->
       <div class="home-main">
-        <el-card shadow="hover" class="home-main-div">
-          <!--                 v-for="item in showNewsInfo" :key="item.id">-->
+        <el-card shadow="hover" class="home-main-div"
+                 v-for="item in showNewsInfo" :key="item.id">
           <div class="el-card-div">
 
             <!--左侧图片区域-->
             <div class="left-img">
               <img style="border-radius: 2.5%;width: 273px;height: 153px;" @click="hrefNewsInfo(1)"
-                   src="https://dimg11.c-ctrip.com/images/020691200082co240B8EA_R_300_120.jpg"/>
+                   :src="item.newscover"/>
             </div>
 
             <!--右侧内容区域-->
             <div class="right-content">
               <div class="right-content-title">
-                afsdfas
-                <!--                {{item.newstitle}}-->
+                {{item.newstitle}}
               </div>
 
               <div class="right-content-content">
-                fasdfgsdfgsead
+                {{computWordNumber(item.newscontent)}}
               </div>
               <div class="right-content-date">
-                <span>啊噶时光大厦是的</span>
+                <span>{{item.releasetime}}</span>
                 <span style="margin-left: 40px">交通咨询</span>
               </div>
 
@@ -152,96 +150,6 @@
           </div>
 
         </el-card>
-        <el-card shadow="hover" class="home-main-div">
-          <!--                 v-for="item in showNewsInfo" :key="item.id">-->
-          <div class="el-card-div">
-
-            <!--左侧图片区域-->
-            <div class="left-img">
-              <img style="border-radius: 2.5%;width: 273px;height: 153px;"
-                   src="https://dimg11.c-ctrip.com/images/020691200082co240B8EA_R_300_120.jpg"/>
-            </div>
-
-            <!--右侧内容区域-->
-            <div class="right-content">
-              <div class="right-content-title">
-                afsdfas
-                <!--                {{item.newstitle}}-->
-              </div>
-
-              <div class="right-content-content">
-                fasdfgsdfgsead
-              </div>
-              <div class="right-content-date">
-                <span>啊噶时光大厦是的</span>
-                <span style="margin-left: 40px">交通咨询</span>
-              </div>
-
-            </div>
-          </div>
-
-        </el-card>
-
-        <el-card shadow="hover" class="home-main-div">
-          <!--                 v-for="item in showNewsInfo" :key="item.id">-->
-          <div class="el-card-div">
-
-            <!--左侧图片区域-->
-            <div class="left-img">
-              <img style="border-radius: 2.5%;width: 273px;height: 153px;"
-                   src="https://dimg11.c-ctrip.com/images/020691200082co240B8EA_R_300_120.jpg"/>
-            </div>
-
-            <!--右侧内容区域-->
-            <div class="right-content">
-              <div class="right-content-title">
-                afsdfas
-                <!--                {{item.newstitle}}-->
-              </div>
-
-              <div class="right-content-content">
-                fasdfgsdfgsead
-              </div>
-              <div class="right-content-date">
-                <span>啊噶时光大厦是的</span>
-                <span style="margin-left: 40px">交通咨询</span>
-              </div>
-
-            </div>
-          </div>
-
-        </el-card>
-
-        <el-card shadow="hover" class="home-main-div">
-          <!--                 v-for="item in showNewsInfo" :key="item.id">-->
-          <div class="el-card-div">
-
-            <!--左侧图片区域-->
-            <div class="left-img">
-              <img style="border-radius: 2.5%;width: 273px;height: 153px;"
-                   src="https://dimg11.c-ctrip.com/images/020691200082co240B8EA_R_300_120.jpg"/>
-            </div>
-
-            <!--右侧内容区域-->
-            <div class="right-content">
-              <div class="right-content-title">
-                afsdfas
-                <!--                {{item.newstitle}}-->
-              </div>
-
-              <div class="right-content-content">
-                fasdfgsdfgsead
-              </div>
-              <div class="right-content-date">
-                <span>啊噶时光大厦是的</span>
-                <span style="margin-left: 40px">交通咨询</span>
-              </div>
-
-            </div>
-          </div>
-
-        </el-card>
-
 
         <!--分页-->
         <page-bar :pageTotal="pageTotal" :pageNum="pagenum" :pageSize="pagesize"
@@ -255,14 +163,12 @@
       <div class="home-main" v-if="showToday">
         <div @click="goMore" style="color: #1d1d1d;margin-top: -10px;font-size:16px;cursor: pointer;">更多...</div>
 
-        <el-card shadow="hover" class="home-main-div">
-          <!--                 v-for="item in showNewsInfo" :key="item.id">-->
+        <el-card shadow="hover" class="home-main-div"
+                           v-for="item in showNewsInfoToday" :key="item.id">
           <div class="el-card-div">
 
             <!--左侧图片区域-->
             <div class="left-img">
-              <!--              <img style="border-radius: 2.5%;width: 273px;height: 153px;"-->
-              <!--                   src="https://dimg11.c-ctrip.com/images/020691200082co240B8EA_R_300_120.jpg"/>-->
               <div class="image2" style="border-radius: 2.5%;width: 140px;height:140px;">
               </div>
             </div>
@@ -270,7 +176,7 @@
             <!--右侧内容区域-->
             <div class="right-content2">
               <div class="right-content-title" style="font-size: 28px">
-                2021-03-04
+<!--                {{showNewsInfoToday}}-->
               </div>
 
               <div class="right-content-content">
@@ -345,6 +251,7 @@
   } from '../../api/common'
   import '../../assets/iconfont/iconfont'
   import PageBar from '@/components/PageBar'
+
   export default {
     name: 'index',
     data() {
@@ -465,6 +372,7 @@
         await getInfoList(1, params).then(res => {
           if (res.success) {
             this.showNewsInfo = res.data.data
+            this.pageTotal = res.data.total
           } else {
             this.$notify({message: '数据获取失败,请刷新!', type: 'error', duration: 2000})
           }
@@ -473,14 +381,14 @@
 
 
         // 当天
-        await getTodayListToday().then(res => {
-          if (res.success) {
-            this.showNewsInfoToday = res.data.data
-          } else {
-            this.$notify({message: '数据获取失败,请刷新!', type: 'error', duration: 2000})
-          }
-
-        })
+        // await getTodayListToday().then(res => {
+        //   if (res.success) {
+        //     this.showNewsInfoToday = res.data.data
+        //   } else {
+        //     this.$notify({message: '数据获取失败,请刷新!', type: 'error', duration: 2000})
+        //   }
+        //
+        // })
 
       },
 
@@ -1105,6 +1013,11 @@
     cursor: pointer;
     /*letter-spacing: 0.05em; !*字体间距*!*/
     color: #333333;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
   }
 
   /*日期*/

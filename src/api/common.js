@@ -551,6 +551,13 @@ export function delWz(id) {
   })
 }
 
+export function updWZ(id) {
+  return request({
+    url: baseURL + `/wz/updWZ/${id}`,
+    method: 'get'
+  })
+}
+
 // 查询 0-所有
 export function getWzList(userid, params) {
   return request({

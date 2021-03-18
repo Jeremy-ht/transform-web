@@ -6,28 +6,27 @@
       <el-table :data="allDetailList" stripe style="width: 100%; margin-top: 10px" border size="small">
 
         <el-table-column label="#" type="index" align="center"/>
-        <el-table-column label="咨询标题" prop="newstitle" align="center"/>
+        <el-table-column label="违章人员" prop="username" align="center"/>
+        <el-table-column label="积分扣除" prop="jf" align="center"/>
+        <el-table-column label="应缴罚款" prop="pay" align="center"/>
 
 
-        <el-table-column label="咨询图片" prop="image" align="center">
+
+        <el-table-column label="提交人员" prop="author"  align="center"/>
+
+        <el-table-column label="剩余积分" prop="waitjf" align="center"/>
+        <el-table-column label="提交时间" align="center" width="170px">>
           <template slot-scope="scope">
-
-            <img style="width: 90px;height: 60px" :src="scope.row.newscover" alt="">
-          </template>
-        </el-table-column>
-
-
-
-        <el-table-column label="发布者" prop="author"  align="center"/>
-
-        <el-table-column label="发布时间" align="center" width="170px">>
-          <template slot-scope="scope">
-            <span style="margin-left: 10px"><i class="el-icon-date"/>{{' '+ scope.row.releasetime}}</span>
+            <span style="margin-left: 10px"><i class="el-icon-date"/>{{' '+ scope.row.creatime}}</span>
           </template>
         </el-table-column>
 
         <el-table-column label="状态" align="center" width="170px">
-            <el-tag type="success">已发布</el-tag>
+          <template slot-scope="scope">
+            <el-tag v-if="scope.row.top == 1" type="success">已处理</el-tag>
+            <el-tag v-else type="danger">未处理</el-tag>
+          </template>
+
         </el-table-column>
 
 
@@ -47,13 +46,14 @@
 <!--        </el-table-column>-->
 
 
-        <el-table-column label="操作" align="center" width="100px">
-          <template slot-scope="scope">
-            <div style="color: red;cursor: pointer" @click="delDetailBtn(scope.row.id)">
-              删除
-            </div>
-          </template>
-        </el-table-column>
+<!--        <el-table-column label="操作" align="center" width="100px">-->
+<!--          <template slot-scope="scope">-->
+<!--            <div style="color: red;cursor: pointer" @click="delDetailBtn(scope.row.id)">-->
+<!--              删除-->
+<!--            </div>-->
+<!--          </template>-->
+<!--        </el-table-column>-->
+
       </el-table>
 
       <!--分页-->
@@ -68,7 +68,7 @@
 
 <script>
   import PageBar from '@/components/PageBar'
-  import { getSceneryList,delInfo,getInfoList, pullScenery2, delScenery, disableComment } from '../../api/common'
+  import { getWzList,delInfo,getInfoList, pullScenery2, delScenery, disableComment } from '../../api/common'
 
   export default {
 
@@ -117,7 +117,7 @@
           pagenum: this.pagenum,
           pagesize: this.pagesize
         }
-        await getInfoList(1, params).then(res => {
+        await getWzList(0, params).then(res => {
           if (res.success && res.data.data.length != 0) {
             this.pageTotal = res.data.total
             this.allDetailList = res.data.data

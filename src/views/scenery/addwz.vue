@@ -11,14 +11,12 @@
       </el-form-item>
 
       <el-form-item label="扣除积分">
-        <el-select v-model="addDetail.jf" placeholder="扣除积分" class="base-width-30" clearable>
-          <el-option v-for="item in 12" :label="item" :key="item"/>
-        </el-select>
+        <el-input placeholder="扣除积分" v-model="addDetail.jf" style="width: 300px"/>
       </el-form-item>
 
 
       <el-form-item label="应缴罚款">
-        <el-input placeholder="应缴罚款" v-model="addDetail.fk"/>
+        <el-input placeholder="应缴罚款" v-model="addDetail.pay" style="width: 300px"/>
       </el-form-item>
 
 
@@ -28,7 +26,7 @@
       </el-form-item>
 
 
-      <el-form-item style="text-align: left;margin-top: 60px">
+      <el-form-item style="text-align: center;margin-top: 60px">
         <el-button type="success" @click="submitForm"><i class="el-icon-upload"></i>&nbsp;&nbsp;提交</el-button>
       </el-form-item>
     </el-form>
@@ -46,11 +44,12 @@
     data() {
       return {
         addDetail: {
-          userid: 0,
+          userid: '',
           content: '',
-          js: 0,
+          jf: 0,
           author: '',
-          fk: 0,
+          pay: 0,
+          top: 0
         },
         userList: [],
 
@@ -94,6 +93,8 @@
       Editor
     },
     created() {
+      this.$notify({message: '请如实正确填写违章记录', type: 'warning', duration: 3000})
+
       this.init()
 
     },
@@ -108,6 +109,8 @@
 
           }
         })
+
+
 
       },
 
@@ -139,6 +142,16 @@
           return false
         }
 
+        if (this.addDetail.jf > 12 || this.addDetail.jf < 0) {
+          this.$notify({message: '请正确填写扣除积分', type: 'error', duration: 1700})
+          return false
+        }
+
+        if (this.addDetail.pay < 0) {
+          this.$notify({message: '请正确填写罚款', type: 'error', duration: 1700})
+          return false
+        }
+
         return true
       },
 
@@ -167,7 +180,8 @@
           content: '',
           js: 0,
           author: '',
-          fk: '',
+          pay: 0,
+          top: 0
         }
       },
 
