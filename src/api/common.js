@@ -39,6 +39,13 @@ export function getUserList(params) {
   })
 }
 
+export function getUserListAll() {
+  return request({
+    url: baseURL + `/user/getUserListAll`,
+    method: 'get'
+  })
+}
+
 export function disableUserById(userId) {
   return request({
     url: baseURL + `/user/disableUserById/${userId}`,
@@ -519,6 +526,37 @@ export function getTodayListToday() {
   return request({
     url: baseURL + `/today/getTodayListToday`,
     method: 'get'
+  })
+}
+
+/**
+ * =========
+ *  违章
+ * =========
+ */
+// 添加
+export function addWz(params) {
+  return request({
+    url: baseURL + `/wz/addWz`,
+    method: 'post',
+    data: params
+  })
+}
+
+// 删除
+export function delWz(id) {
+  return request({
+    url: baseURL + `/wz/delWz/${id}`,
+    method: 'get'
+  })
+}
+
+// 查询 0-所有
+export function getWzList(userid, params) {
+  return request({
+    url: baseURL + `/wz/getWzList/${userid}`,
+    method: 'get',
+    params
   })
 }
 

@@ -135,6 +135,7 @@ export const constantRoutes = [
       }
     ]
   },
+
   {
     path: '/user',
     component: Layout,
@@ -171,6 +172,29 @@ export const constantRoutes = [
   // },
 
   {
+    path: '/wz',
+    component: Layout,
+    redirect: '/list',
+    name: '交通违章',
+    meta: {title: '交通违章', icon: 'el-icon-s-cooperation'},
+    children: [
+      {
+        path: 'detail',
+        name: '违章信息',
+        component: () => import('@/views/scenery/wz'),
+        meta: {title: '违章信息', icon: 'table'}
+      },
+      {
+        path: 'add',
+        name: '违章记录',
+        component: () => import('@/views/scenery/addwz'),
+        meta: {title: '违章记录', icon: 'table'}
+      }
+    ]
+  },
+
+
+  {
     path: '/infos',
     component: Layout,
     redirect: '/infos/list',
@@ -179,9 +203,9 @@ export const constantRoutes = [
     children: [
       {
         path: 'list',
-        name: '咨询列表',
+        name: '咨询信息',
         component: () => import('@/views/scenery/list'),
-        meta: {title: '咨询列表', icon: 'table'}
+        meta: {title: '咨询信息', icon: 'table'}
       },
       {
         path: 'pull',
