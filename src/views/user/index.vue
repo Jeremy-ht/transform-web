@@ -25,20 +25,20 @@
           </template>
         </el-table-column>
 
-        <el-table-column label="积分" prop="carimage" align="center">
+        <el-table-column label="剩余积分" prop="carimage" align="center">
           <template slot-scope="scope">
             <span style="margin-left: 10px">{{ scope.row.jf }}</span>
           </template>
         </el-table-column>
 
 
-        <el-table-column label="操作" align="center" width="120px">
-          <template slot-scope="scope">
-            <el-button class="admin-add-btn" type="primary" size="mini"
-                       @click="getWZ(scope.row.id)"><i class="el-icon-circle-plus-outline"></i> &nbsp;查看违章
-            </el-button>
-          </template>
-        </el-table-column>
+<!--        <el-table-column label="操作" align="center" width="120px">-->
+<!--          <template slot-scope="scope">-->
+<!--            <el-button class="admin-add-btn" type="primary" size="mini"-->
+<!--                       @click="getWZ(scope.row.id)"><i class="el-icon-circle-plus-outline"></i> &nbsp;查看违章-->
+<!--            </el-button>-->
+<!--          </template>-->
+<!--        </el-table-column>-->
 
       </el-table>
 
@@ -49,6 +49,25 @@
 
 
     </el-card>
+
+
+    <el-dialog title="违章信息" :visible.sync="updDialogVisible2" width="50%">
+      <span>
+        <div>违章时间：{{wzInfo.creatime}}</div>
+        <div class="bb">扣除积分：{{wzInfo.jf}}分</div>
+        <div class="bb">应缴罚款：{{wzInfo.pay}}元</div>
+        <div class="bb">违章详情：</div>
+        <div style="margin-left: 40px" v-html="wzInfo.content"></div>
+
+
+
+      </span>
+
+      <!--底部区域-->
+      <span slot="footer" class="dialog-footer">
+        <el-button type="info" @click="updDialogVisible2 = false" size="mini">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -65,7 +84,11 @@
         pagesize: 8,
         pageTotal: 0,
 
-        userList: []
+        userList: [],
+        updDialogVisible2: false,
+        wzInfo:{
+
+        }
       }
     },
     components: {

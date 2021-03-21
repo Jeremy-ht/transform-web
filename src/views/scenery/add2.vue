@@ -9,7 +9,7 @@
 
       <el-form-item label="内容" prop="content">
         <editor api-key="u6hiizd3o4r3p4mhnvag8b7fc9hhs8yivqdddzqbd60tyoh5" :init="tinymceConfig"
-                v-model="addDetail.newscontent" style="z-index: 0"/>
+                v-model="addDetail.content" style="z-index: 0"/>
       </el-form-item>
 
 
@@ -132,10 +132,8 @@
 
       // 重置表单
       resetForm() {
-        this.addDetail = {
-          content: '',
-          author: ''
-        }
+        this.addDetail.content = ''
+        this.addDetail.author = this.adminInfo.username
       },
 
 

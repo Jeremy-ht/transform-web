@@ -204,7 +204,7 @@
             ]
         },
 
-        showLoginOr: false,
+        showLoginOr: true,
         //表单验证
         loginFormRules2: {
           uname:

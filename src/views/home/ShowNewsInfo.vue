@@ -1,69 +1,81 @@
 <template>
-	<div class="div-top">
-		<el-card shadow="header" class="el-card-div">
-			<div class="content-div">
+  <div style="margin-bottom: 30px">
+    <div class="header">
+      <div class="header-item">
 
-				<h1 style="text-align: center;color: #333333">{{newsInfo.newstitle}}</h1>
+        <div class="header-item-icon" @click="goHome">
+          智能交通查询平台
+        </div>
 
-				<div style="font-size: 14px;color: #a29e9e;">
-					来源：{{newsInfo.author}}<span class="shuxian">|</span>{{newsInfo.releasetime}}
-				</div>
+      </div>
+    </div>
 
-				<div class="content-p">
-					<p v-html="newsInfo.newscontent"/>
-				</div>
+    <div class="div-top">
+      <el-card shadow="header" class="el-card-div">
+        <div class="content-div">
 
-			</div>
+          <h1 style="text-align: center;color: #333333">{{newsInfo.newstitle}}</h1>
 
-			<div class="comment">
-				<div class="comment-number">
-					<span style="font-size: 28px;margin-left: 8px;color: #36ff25">{{pageTotal}}</span>
-					<span style="color: #657180;font-size: 20px;margin-left: 8px">条评论</span>
-				</div>
+          <div style="font-size: 14px;color: #a29e9e;">
+            来源：{{newsInfo.author}}<span class="shuxian">|</span>{{newsInfo.creatime}}
+          </div>
 
-				<div class="write-comment">
+          <div class="content-p">
+            <p v-html="newsInfo.newscontent"/>
+          </div>
 
-					<span style="width: 7%">
-						<img :src="userInfo.ico"
-						     width="28px" height="28px" style="border-radius:50%">
-					</span>
+        </div>
 
-					<span class="write-comment-content">
-						<el-input type="textarea" placeholder="写下您的评论..."
-						          v-model="commentInfo.commentary"/>
-						 <el-button type="info" size="small" @click="commentCommit"
-						            style="margin-top: 10px;margin-left: 92.7%">
-							 评论
-						 </el-button>
-					</span>
+        <!--			<div class="comment">-->
+        <!--				<div class="comment-number">-->
+        <!--					<span style="font-size: 28px;margin-left: 8px;color: #36ff25">{{pageTotal}}</span>-->
+        <!--					<span style="color: #657180;font-size: 20px;margin-left: 8px">条评论</span>-->
+        <!--				</div>-->
 
-				</div>
+        <!--				<div class="write-comment">-->
 
-				<div class="comment-content" v-for="item in commentList">
-					<span style="width: 7%;">
-						<img :src="item.ico"
-						     width="28px" height="28px" style="border-radius:50%">
-					</span>
+        <!--					<span style="width: 7%">-->
+        <!--						<img :src="userInfo.ico"-->
+        <!--						     width="28px" height="28px" style="border-radius:50%">-->
+        <!--					</span>-->
 
-					<span class="comment-content-name">
-						<span style="font-size: 16px;color: #ff6817;">{{item.username}}</span>
-						<span style="margin-left: 15px;color: #657180;font-size: 16px;">{{item.createtime}}</span>
-					</span>
+        <!--					<span class="write-comment-content">-->
+        <!--						<el-input type="textarea" placeholder="写下您的评论..."-->
+        <!--						          v-model="commentInfo.commentary"/>-->
+        <!--						 <el-button type="info" size="small" @click="commentCommit"-->
+        <!--						            style="margin-top: 10px;margin-left: 92.7%">-->
+        <!--							 评论-->
+        <!--						 </el-button>-->
+        <!--					</span>-->
 
-					<span class="comment-content-span">
-						{{item.commentary}}
-					</span>
+        <!--				</div>-->
 
-				</div>
+        <!--				<div class="comment-content" v-for="item in commentList">-->
+        <!--					<span style="width: 7%;">-->
+        <!--						<img :src="item.ico"-->
+        <!--						     width="28px" height="28px" style="border-radius:50%">-->
+        <!--					</span>-->
 
-			</div>
+        <!--					<span class="comment-content-name">-->
+        <!--						<span style="font-size: 16px;color: #ff6817;">{{item.username}}</span>-->
+        <!--						<span style="margin-left: 15px;color: #657180;font-size: 16px;">{{item.createtime}}</span>-->
+        <!--					</span>-->
 
-		</el-card>
-	</div>
+        <!--					<span class="comment-content-span">-->
+        <!--						{{item.commentary}}-->
+        <!--					</span>-->
+
+        <!--				</div>-->
+
+        <!--			</div>-->
+
+      </el-card>
+    </div>
+  </div>
 </template>
 
 <script>
-  // import {request} from "network/network"
+  import {getInfoDeatilById} from '../../api/common'
 
   const comments = {
     newsid: '',
@@ -98,12 +110,25 @@
     },
     methods: {
       async init() {
-        // this.newsId = this.$route.params.id
-        // this.commentInfo.newsid = this.$route.params.id
+        this.newsId = this.$route.params.id
+        this.commentInfo.newsid = this.$route.params.id
+
+        await getInfoDeatilById(this.commentInfo.newsid).then(res => {
+          if (res.success) {
+            this.newsInfo = res.data.data
+          }
+        })
+
+
         // this.newsInfo = JSON.parse(window.sessionStorage.getItem('newsInfo'))
         // this.getCommentList()
         // this.getUserInfo()
 
+      },
+
+      // 去首页
+      goHome() {
+        this.$router.push({path: `/home`})
       },
 
       // 提交评论
@@ -162,87 +187,129 @@
 </script>
 
 <style scoped>
-	.div-top {
-		margin: 0;
-		padding: 0;
-		background-color: #f7f7f7;
-	}
+  .div-top {
+    margin: 0;
+    padding-top: 10px;
+    padding-bottom: 50px;
+    background-color: #f7f7f7;
+  }
 
-	.el-card-div {
-		margin-left: 5%;
-		margin-right: 5%;
-		/*padding-bottom: 330px;*/
-	}
+  .el-card-div {
+    margin-left: 5%;
+    margin-right: 5%;
+    /*padding-bottom: 330px;*/
+  }
 
-	.content-div {
-		margin-left: 5%;
-		margin-right: 5%;
-		margin-bottom: 50px;
-	}
+  .content-div {
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 50px;
+  }
 
-	.content-p {
-		font-size: 17px;
-		line-height: 32px;
-		color: #333333;
-		margin-top: 37px;
+  .content-p {
+    font-size: 17px;
+    line-height: 32px;
+    color: #333333;
+    margin-top: 37px;
 
-	}
+  }
 
-	.shuxian {
-		padding-left: 8px;
-		padding-right: 8px;
-	}
+  .shuxian {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
 
-	.comment {
-		margin-left: 5%;
-		margin-right: 5%;
-		/*border: 1px red solid;*/
-		width: 70%;
-		height: 100%;
-		margin-bottom: 30px;
-	}
+  .comment {
+    margin-left: 5%;
+    margin-right: 5%;
+    /*border: 1px red solid;*/
+    width: 70%;
+    height: 100%;
+    margin-bottom: 30px;
+  }
 
-	.comment-number {
-		width: 20%;
-		height: 50px;
-		/*border: 1px red solid;*/
-		font-size: 20px;
-		color: #55a532;
-	}
+  .comment-number {
+    width: 20%;
+    height: 50px;
+    /*border: 1px red solid;*/
+    font-size: 20px;
+    color: #55a532;
+  }
 
-	.comment-content {
-		width: 100%;
-		display: flex;
-		flex-wrap: wrap;
-		border-bottom: 1px #dbdbdb solid;
-		margin-top: 15px;
-	}
+  .comment-content {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    border-bottom: 1px #dbdbdb solid;
+    margin-top: 15px;
+  }
 
-	.comment-content-name {
-		width: 90%;
-		margin-bottom: 10px;
+  .comment-content-name {
+    width: 90%;
+    margin-bottom: 10px;
 
-	}
+  }
 
-	.comment-content-span {
-		width: 90%;
-		margin-left: 7%;
-		margin-bottom: 15px;
-		font-size: 15px;
-		color: #222;
-	}
+  .comment-content-span {
+    width: 90%;
+    margin-left: 7%;
+    margin-bottom: 15px;
+    font-size: 15px;
+    color: #222;
+  }
 
-	.write-comment {
-		width: 100%;
-		display: flex;
-		margin-top: 10px;
-		border-bottom: 1px #dbdbdb solid;
-	}
+  .write-comment {
+    width: 100%;
+    display: flex;
+    margin-top: 10px;
+    border-bottom: 1px #dbdbdb solid;
+  }
 
-	.write-comment-content {
-		width: 93%;
-		height: 100px;
-		/*border: 1px yellow solid;*/
-		margin-bottom: 10px;
-	}
+  .write-comment-content {
+    width: 93%;
+    height: 100px;
+    /*border: 1px yellow solid;*/
+    margin-bottom: 10px;
+  }
+
+  .header {
+    width: 100%;
+    height: 60px;
+    background-color: black;
+    display: flex;
+  }
+
+  .header-item {
+    width: 1200px;
+    height: 100%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+
+  }
+
+  .header-item-icon {
+    line-height: 60px;
+    font-size: 22px;
+    font-weight: 500;
+    cursor: pointer;
+    color: white;
+  }
+
+  .loginTar {
+    line-height: 60px;
+    color: white;
+    margin-right: 10px;
+  }
+
+
+  .header-item-search {
+    width: 400px;
+    display: flex;
+  }
+
+  .header-item-search-ic {
+    width: 340px;
+    margin: auto;
+  }
 </style>

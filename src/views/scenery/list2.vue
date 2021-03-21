@@ -13,7 +13,11 @@
           </template>
         </el-table-column>
 
-        <el-table-column label="内容" prop="newstitle" align="center"/>
+        <el-table-column label="内容" prop="content" align="center">
+          <template slot-scope="scope">
+            <span>  {{computWordNumber(scope.row.content)}}</span>
+          </template>
+        </el-table-column>
 
 
         <el-table-column label="发布时间" align="center" width="170px">>
@@ -95,6 +99,17 @@
           }
         })
 
+      },
+
+      // 获取纯文本
+      computWordNumber(content) {
+        let text = content.replace(/<[^>]*>|/g, "")
+        text = text.replace('&nbsp;', ' ')
+        if (text.length >= 150) {
+          text = text.substring(0, 100)
+          text += '......'
+        }
+        return text
       },
 
       // 分页

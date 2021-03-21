@@ -128,22 +128,23 @@
 
             <!--左侧图片区域-->
             <div class="left-img">
-              <img style="border-radius: 2.5%;width: 273px;height: 153px;" @click="hrefNewsInfo(1)"
+              <img style="border-radius: 2.5%;width: 273px;height: 153px;"
+                   @click="hrefNewsInfo(item.id)"
                    :src="item.newscover"/>
             </div>
 
             <!--右侧内容区域-->
             <div class="right-content">
-              <div class="right-content-title">
+              <div class="right-content-title" @click="hrefNewsInfo(item.id)">
                 {{item.newstitle}}
               </div>
 
-              <div class="right-content-content">
+              <div class="right-content-content" @click="hrefNewsInfo(item.id)">
                 {{computWordNumber(item.newscontent)}}
               </div>
               <div class="right-content-date">
                 <span>{{item.releasetime}}</span>
-                <span style="margin-left: 40px">交通咨询</span>
+                <span style="margin-left: 40px">交通资讯</span>
               </div>
 
             </div>
@@ -151,9 +152,11 @@
 
         </el-card>
 
-        <!--分页-->
-        <page-bar :pageTotal="pageTotal" :pageNum="pagenum" :pageSize="pagesize"
-                  @handleSizeChange="handleSizeChange" @handleCurrentChange="handleCurrentChange"/>
+        <div class="bottom">
+          <!--分页-->
+          <page-bar :pageTotal="pageTotal" :pageNum="pagenum" :pageSize="pagesize"
+                    @handleSizeChange="handleSizeChange" @handleCurrentChange="handleCurrentChange"/>
+        </div>
       </div>
 
     </div>
@@ -161,26 +164,33 @@
     <div class="contentCar" v-if="showIndex == 3">
 
       <div class="home-main" v-if="showToday">
-        <div @click="goMore" style="color: #1d1d1d;margin-top: -10px;font-size:16px;cursor: pointer;">更多...</div>
+        <div @click="goMore" style="color: #1d1d1d;margin-top: -10px;font-size:16px;cursor: pointer;">
+          <el-button icon="el-icon-date" size="mini">更多...</el-button>
+        </div>
 
-        <el-card shadow="hover" class="home-main-div"
-                           v-for="item in showNewsInfoToday" :key="item.id">
+        <el-card shadow="hover"
+                 class="home-main-div"
+                 v-for="item in showNewsInfoToday" :key="item.id">
           <div class="el-card-div">
 
             <!--左侧图片区域-->
             <div class="left-img">
-              <div class="image2" style="border-radius: 2.5%;width: 140px;height:140px;">
+              <div class="image2"
+                   @click="hrefNewsInfo2(item.id)"
+                   style="border-radius: 2.5%;width: 140px;height:140px;">
               </div>
             </div>
 
             <!--右侧内容区域-->
             <div class="right-content2">
-              <div class="right-content-title" style="font-size: 28px">
-<!--                {{showNewsInfoToday}}-->
+              <div class="right-content-title" style="font-size: 28px"
+                   @click="hrefNewsInfo2(item.id)">
+                {{item.creatime.substring(0,10)}}
               </div>
 
-              <div class="right-content-content">
-                fasdfgsdfgsead
+              <div class="right-content-content"
+                   @click="hrefNewsInfo2(item.id)">
+                {{computWordNumber(item.content)}}
               </div>
               <div class="right-content-date">
                 <span>今日道路</span>
@@ -194,26 +204,34 @@
 
 
       <div class="home-main" v-if="!showToday">
-        <el-card shadow="hover" class="home-main-div">
-          <!--                 v-for="item in showNewsInfoAll" :key="item.id">-->
+        <div @click="goMoreToady" style="color: #1d1d1d;margin-top: -10px;font-size:16px;cursor: pointer;">
+          <el-button icon="el-icon-back"  size="mini">返回</el-button>
+        </div>
+
+        <el-card shadow="hover"
+                 class="home-main-div"
+                 v-for="item in showNewsInfoAll" :key="item.id">
           <div class="el-card-div">
 
             <!--左侧图片区域-->
             <div class="left-img">
-              <!--              <img style="border-radius: 2.5%;width: 273px;height: 153px;"-->
-              <!--                   src="https://dimg11.c-ctrip.com/images/020691200082co240B8EA_R_300_120.jpg"/>-->
-              <div class="image2" style="border-radius: 2.5%;width: 140px;height:140px;">
+              <div class="image2"
+                   @click="hrefNewsInfo2(item.id)"
+                   style="border-radius: 2.5%;width: 140px;height:140px;">
               </div>
             </div>
 
             <!--右侧内容区域-->
             <div class="right-content2">
-              <div class="right-content-title" style="font-size: 28px">
-                2021-03-04
+              <div class="right-content-title"
+                   @click="hrefNewsInfo2(item.id)"
+                   style="font-size: 28px">
+                {{item.creatime.substring(0,10)}}
               </div>
 
-              <div class="right-content-content">
-                fasdfgsdfgsead
+              <div class="right-content-content"
+                   @click="hrefNewsInfo2(item.id)">
+                {{computWordNumber(item.content)}}
               </div>
               <div class="right-content-date">
                 <span>今日道路</span>
@@ -223,6 +241,14 @@
           </div>
 
         </el-card>
+
+
+        <div class="bottom">
+          <page-bar :pageTotal="pageTotal2" :pageNum="pagenum2" :pageSize="pagesize2"
+                    @handleSizeChange="handleSizeChange2" @handleCurrentChange="handleCurrentChange2"/>
+
+        </div>
+        <!--分页-->
       </div>
 
     </div>
@@ -251,6 +277,7 @@
   } from '../../api/common'
   import '../../assets/iconfont/iconfont'
   import PageBar from '@/components/PageBar'
+  import PageBarr from '@/components/PageBarr'
 
   export default {
     name: 'index',
@@ -340,12 +367,16 @@
         pagenum: 1,
         pagesize: 10,
         pageTotal: 0,
+        pagenum2: 1,
+        pagesize2: 10,
+        pageTotal2: 0,
 
 
       }
     },
     components: {
-      PageBar
+      PageBar,
+      PageBarr
 
     },
     created() {
@@ -368,7 +399,7 @@
           pagenum: this.pagenum,
           pagesize: this.pagesize
         }
-        // 交通咨询
+        // 交通资讯
         await getInfoList(1, params).then(res => {
           if (res.success) {
             this.showNewsInfo = res.data.data
@@ -381,34 +412,36 @@
 
 
         // 当天
-        // await getTodayListToday().then(res => {
-        //   if (res.success) {
-        //     this.showNewsInfoToday = res.data.data
-        //   } else {
-        //     this.$notify({message: '数据获取失败,请刷新!', type: 'error', duration: 2000})
-        //   }
-        //
-        // })
-
-      },
-
-
-      async goMore() {
-        let p = {
-          pagenum: 1,
-          pagesize: 100
-        }
-        await getTodayList(p).then(res => {
+        await getTodayListToday().then(res => {
           if (res.success) {
-            this.showNewsInfoAll = res.data.data
-
+            this.showNewsInfoToday = res.data.data
           } else {
             this.$notify({message: '数据获取失败,请刷新!', type: 'error', duration: 2000})
           }
 
         })
 
+      },
+
+
+      async goMore() {
+        let p = {
+          pagenum: this.pagenum2,
+          pagesize: this.pagesize2
+        }
+        await getTodayList(p).then(res => {
+          if (res.success) {
+            this.pageTotal2 = res.data.total
+            this.showNewsInfoAll = res.data.data
+          }
+
+        })
+
         this.showToday = false
+      },
+
+      goMoreToady() {
+        this.showToday = true
       },
 
 
@@ -421,12 +454,25 @@
         this.pagenum = pagenum
         this.getInit()
       },
+      // 分页
+      handleSizeChange2(pagesize) {
+        this.pagesize2 = pagesize
+        this.getInit()
+      },
+      handleCurrentChange2(pagenum) {
+        this.pagenum2 = pagenum
+        this.getInit()
+      },
 
 
       // 点击新闻跳转页面查看新闻详细信息
       hrefNewsInfo(newInfo) {
-        window.sessionStorage.setItem("newsInfo", JSON.stringify(newInfo))
         const {href} = this.$router.resolve({path: '/ShowNewsInfo/' + newInfo})
+        window.open(href, '_blank')
+      },
+
+      hrefNewsInfo2(id) {
+        const {href} = this.$router.resolve({path: '/ShowInfo/' + id})
         window.open(href, '_blank')
       },
 
@@ -505,11 +551,9 @@
         } else if (id == 3) {
           // 违章信息
           if (!this.loginIs()) {
-            this.$notify({title: '警告', message: '请先登录系统', type: 'warning'});
+            this.$notify({title: '警告', message: '请登录系统', type: 'warning'});
           } else {
-
-
-            this.showIndex = '2'
+            this.$router.push({path: `/center`})
           }
 
 
@@ -524,7 +568,7 @@
 
       // 登录
       goLogin() {
-        this.$router.push({path: `/phone/login`})
+        this.$router.push({path: `/logins`})
       },
 
       // 个人中心
@@ -1017,7 +1061,7 @@
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;
+    -webkit-box-orient: vertical;
   }
 
   /*日期*/
@@ -1041,6 +1085,15 @@
     /*margin: auto;*/
     background-repeat: no-repeat;
     margin-left: 14px;
+  }
+
+  .bottom {
+    width: 1200px;
+    height: 50px;
+    margin-top: 20px;
+    background-color: #efefef;
+    padding-bottom: 10px;
+    border-radius: 6px;
   }
 
 </style>

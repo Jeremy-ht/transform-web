@@ -124,7 +124,7 @@
       },
 
       pullDetail(id) {
-        this.$confirm('是否确定发布此交通咨询?', '提示', {
+        this.$confirm('是否确定发布此交通资讯?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'

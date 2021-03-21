@@ -451,7 +451,7 @@ export function getOrderList(params) {
 
 /**
  * =========
- *  交通咨询
+ *  交通资讯
  * =========
  */
 // 添加  state==7 保存   state==1发布
@@ -485,6 +485,20 @@ export function getInfoList(id, params) {
     url: baseURL + `/infos/getInfoList/${id}`,
     method: 'get',
     params
+  })
+}
+
+export function getInfoDeatilById(id) {
+  return request({
+    url: baseURL + `/infos/getInfoDeatilById/${id}`,
+    method: 'get'
+  })
+}
+
+export function getInfoDeatilByIdToday(id) {
+  return request({
+    url: baseURL + `/today/getInfoDeatilById/${id}`,
+    method: 'get'
   })
 }
 
@@ -551,9 +565,9 @@ export function delWz(id) {
   })
 }
 
-export function updWZ(id) {
+export function updWZ(userid,id) {
   return request({
-    url: baseURL + `/wz/updWZ/${id}`,
+    url: baseURL + `/wz/updWZ/${userid}/${id}`,
     method: 'get'
   })
 }
@@ -564,6 +578,14 @@ export function getWzList(userid, params) {
     url: baseURL + `/wz/getWzList/${userid}`,
     method: 'get',
     params
+  })
+}
+
+
+export function getJfUser(userid) {
+  return request({
+    url: baseURL + `/user/getJfUser/${userid}`,
+    method: 'get'
   })
 }
 

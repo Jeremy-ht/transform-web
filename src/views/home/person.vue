@@ -1,69 +1,121 @@
 <template>
   <div class="home-container">
 
-    <div class="container-item-hr">
-      <svg @click="goHome()" t="1614167354200" class="icon"
-           viewBox="0 0 1024 1024" version="1.1"
-           xmlns="http://www.w3.org/2000/svg" p-id="2441"
-           width="200" height="200">
-        <path
-          d="M645.924571 0C693.101714 0 731.428571 35.328 731.428571 78.774857v866.450286C731.428571 988.672 693.101714 1024 645.924571 1024H85.504C38.326857 1024 0 988.672 0 945.225143V78.774857C0 35.328 38.326857 0 85.504 0h560.420571zM841.142857 438.857143a36.571429 36.571429 0 0 1 36.571429 36.571428v512a36.571429 36.571429 0 0 1-73.142857 0v-512a36.571429 36.571429 0 0 1 36.571428-36.571428z m146.285714 292.571428a36.571429 36.571429 0 0 1 36.571429 36.571429v219.428571a36.571429 36.571429 0 0 1-73.142857 0v-219.428571a36.571429 36.571429 0 0 1 36.571428-36.571429zM657.773714 73.069714h-585.142857v877.641143h585.142857v-877.714286zM585.142857 331.995429c0 13.897143-7.460571 26.112-18.651428 33.133714C550.253714 458.605714 466.432 530.066286 365.714286 530.066286S181.174857 458.605714 164.937143 365.129143A39.204571 39.204571 0 0 1 146.285714 332.068571C146.285714 310.272 164.498286 292.571429 186.88 292.571429c22.381714 0 40.521143 17.700571 40.521143 39.497142a38.765714 38.765714 0 0 1-12.8 28.672C228.425143 429.641143 290.889143 481.718857 365.714286 481.718857s137.289143-52.077714 151.113143-120.978286a38.765714 38.765714 0 0 1-12.8-28.745142c0-21.723429 18.139429-39.424 40.521142-39.424 22.381714 0 40.594286 17.700571 40.594286 39.497142zM329.142857 804.571429h73.142857a36.571429 36.571429 0 0 1 0 73.142857h-73.142857a36.571429 36.571429 0 0 1 0-73.142857z"
-          p-id="2442" fill="#e6e6e6"></path>
-      </svg>
+    <div class="header">
+      <div class="header-item">
+
+        <div class="header-item-icon" @click="goHome">
+          智能交通查询平台
+        </div>
+
+      </div>
     </div>
 
 
     <div style="display: flex;background-color: #ededed;">
       <div class="person-show">
 
-        <div class="person-show-left">
-          <div class="name">
-            <!--          <img class="avatar" :src="UserInfo.image" alt="">-->
-            <img class="avatar" src="http://service.szhtkj.com.cn/SzhtShop/uploads/default/avatar/userimg.png" alt="">
-            <div class="username">{{UserInfo.uname}}</div>
-          </div>
-
-          <div class="base" @click="showIsOR(1)">我的账号</div>
-<!--          <div class="base" @click="showIsOR(2)">我的订单</div>-->
-          <div class="base" style="border-bottom: solid 1px #dbdbdb;" @click="showIsOR(3)">收货地址</div>
-        </div>
-
-
         <div class="person-show-right">
-          <div class="person-show-right-div">
-            <span>{{' ' + titleName}}</span>
-          </div>
+          <div class="person-show-right-div-item">
 
-
-          <div class="person-show-right-div-item" v-if="showIs == '1'">
-
-            <div>
+            <div class="dov">
+              <el-button @click="showIsOR(1)" class="btn22" type="primary">违章处理</el-button>
+              <el-button @click="showIsOR(2)" class="btn22" type="primary">积分记录</el-button>
               <el-button @click="goUpd" class="btn22" type="primary">修改密码</el-button>
-              <el-button @click="goShopping" class="btn22" type="primary">我的购物车</el-button>
-<!--              <el-button @click="showIsOR(2)" class="btn22" type="primary">我的订单</el-button>-->
-              <el-button @click="showIsOR(3)" class="btn22" type="primary">收货地址</el-button>
-              <el-button @click="layoutGo" class="btn22" type="primary">退出登录</el-button>
+              <el-button @click="layoutGo" class="btn22" type="primary">退出系统</el-button>
             </div>
 
-          </div>
+            <div class="dov-right">
+              <div class="dov-right-item" v-if="showIs == '1'">
+
+                <el-tabs v-model="activeName">
+                  <el-tab-pane label="未处理" name="first">
+
+                    <!--表格-->
+                    <el-table :data="allDetailList" stripe style="width: 100%; margin-top: 10px" border size="small">
+                      <el-table-column label="#" type="index" align="center"/>
+                      <el-table-column label="积分扣除" prop="jf" align="center"/>
+                      <el-table-column label="应缴罚款" prop="pay" align="center"/>
+                      <el-table-column label="违章时间" align="center" width="170px">>
+                        <template slot-scope="scope">
+                          <span style="margin-left: 10px"><i class="el-icon-date"/>{{' '+ scope.row.creatime}}</span>
+                        </template>
+                      </el-table-column>
+
+                      <el-table-column label="状态" align="center">
+                        <template slot-scope="scope">
+                          <el-tag @click="goWZ(scope.row)"
+                                  effect="dark" type="danger"
+                                  style="cursor:pointer"
+                                  size="small">处理违章
+                          </el-tag>
+                          <el-tag effect="dark" style="margin-left: 10px;cursor:pointer" type="primary" size="small"
+                                  @click="getWZ(scope.row)">违章信息
+                          </el-tag>
+                        </template>
+                      </el-table-column>
+
+                    </el-table>
+
+                    <!--分页-->
+                    <page-bar :pageTotal="pageTotal" :pageNum="pagenum" :pageSize="pagesize"
+                              @handleSizeChange="handleSizeChange" @handleCurrentChange="handleCurrentChange"/>
+
+                  </el-tab-pane>
 
 
-          <div class="person-show-right-div-item" v-if="showIs == '3'">
+                  <el-tab-pane label="已处理" name="second">
 
-            <el-button @click="addressDialog = true" class="btn2ww2" type="primary">添加地址</el-button>
+                    <!--表格-->
+                    <el-table :data="allDetailList2" stripe style="width: 100%; margin-top: 10px" border size="small">
+                      <el-table-column label="#" type="index" align="center"/>
+                      <el-table-column label="积分扣除" prop="jf" align="center"/>
+                      <el-table-column label="应缴罚款" prop="pay" align="center"/>
+                      <el-table-column label="违章时间" align="center" width="170px">>
+                        <template slot-scope="scope">
+                          <span style="margin-left: 10px"><i class="el-icon-date"/>{{' '+ scope.row.creatime}}</span>
+                        </template>
+                      </el-table-column>
 
-            <div class="aaaaaaaa">
-              <div class="addr" v-for="item in addressList" :index="item.id">
-                <div class="uname">收件人：{{item.name}}</div>
-                <div class="phone">手机号：{{item.phone}}</div>
-                <div class="addresss">地 址：{{item.address}}</div>
+                      <el-table-column label="状态" align="center">
+                        <template slot-scope="scope">
+                          <el-tag effect="dark"
+                                  style="cursor:pointer"
+                                  type="danger" size="small">已处理
+                          </el-tag>
+                          <el-tag
+                            effect="dark" style="margin-left: 10px;cursor: pointer" type="primary" size="small"
+                            @click="getWZ(scope.row)">违章信息
+                          </el-tag>
+                        </template>
+                      </el-table-column>
+
+                    </el-table>
+
+                    <!--分页-->
+                    <page-bar :pageTotal="pageTotal2" :pageNum="pagenum2" :pageSize="pagesize2"
+                              @handleSizeChange="handleSizeChange" @handleCurrentChange="handleCurrentChange"/>
+
+
+                  </el-tab-pane>
+                </el-tabs>
+
+
+              </div>
+
+              <div class="dov-right-item" v-if="showIs == '2'">
+
+
+                <el-timeline>
+                  <el-timeline-item timestamp="2018/4/12" placement="top">
+                    <el-card>
+                      <h4>更新 Github 模板</h4>
+                      <p>王小虎 提交于 2018/4/12 20:46</p>
+                    </el-card>
+                  </el-timeline-item>
+                </el-timeline>
               </div>
             </div>
-
-          </div>
-
-
-          <div class="person-show-right-div-item" v-if="showIs == '2'">
 
           </div>
 
@@ -74,43 +126,8 @@
     </div>
 
 
-    <!-- ========================= -->
-    <!-- 地址 start -->
-    <!-- ========================= -->
-    <el-dialog title="添加收货地址" center :visible.sync="addressDialog" width="26%">
-      <span>
-        <!--表单-->
-        <div style="display: flex">
-           <el-form :model="addressInfo" :rules="loginFormRules3" style="margin: 4px auto;">
-            <!--用户名-->
-            <el-form-item prop="name">
-              <el-input placeholder="收件人" v-model="addressInfo.name" style="width: 300px"/>
-            </el-form-item>
-
-             <!--密码-->
-            <el-form-item prop="phone">
-              <el-input placeholder="手机号"
-                        v-model="addressInfo.phone" style="width: 300px"/>
-            </el-form-item>
-
-             <!--手机号-->
-            <el-form-item prop="address">
-              <el-input placeholder="地址" v-model="addressInfo.address" style="width: 300px"/>
-            </el-form-item>
-
-
-            <el-form-item style="display: flex;justify-content: center">
-              <el-button @click="goAddAddress" class="btn2ww2333" type="success" size="small">确定</el-button>
-              <!--              <el-button style="margin-left: 60px" @click="addressDialog = false" size="small">取 消</el-button>-->
-            </el-form-item>
-          </el-form>
-        </div>
-      </span>
-    </el-dialog>
-
-
     <!--修改密码 -->
-    <el-dialog title="修改密码" :visible.sync="updDialogVisible" width="20%">
+    <el-dialog title="修改密码" :visible.sync="updDialogVisible" width="50%">
       <span>
         <!--表单-->
         <el-form label-width="90px">
@@ -127,8 +144,27 @@
 
       <!--底部区域-->
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitPwd(UserInfo.id)" size="mini">修改</el-button>
-        <el-button @click="updDialogVisible = false" size="mini">取 消</el-button>
+        <el-button type="info" @click="submitPwd(UserInfo.id)" size="mini">修改</el-button>
+        <el-button type="info" @click="updDialogVisible = false" size="mini">取 消</el-button>
+      </span>
+    </el-dialog>
+
+
+    <el-dialog title="违章信息" :visible.sync="updDialogVisible2" width="50%">
+      <span>
+        <div>违章时间：{{wzInfo.creatime}}</div>
+        <div class="bb">扣除积分：{{wzInfo.jf}}分</div>
+        <div class="bb">应缴罚款：{{wzInfo.pay}}元</div>
+        <div class="bb">违章详情：</div>
+        <div style="margin-left: 40px" v-html="wzInfo.content"></div>
+
+
+
+      </span>
+
+      <!--底部区域-->
+      <span slot="footer" class="dialog-footer">
+        <el-button type="info" @click="updDialogVisible2 = false" size="mini">确 定</el-button>
       </span>
     </el-dialog>
 
@@ -138,10 +174,14 @@
 
 <script>
   import {
-    getAddressList, addAddress, getUserList, getSceneryIndex,
-    getSceneryList, getrotationList, updUserInfo, getSearchContent, updPasswordById
+    getJfUser, updWZ, getAddressList,
+    addAddress, getUserList, getSceneryIndex,
+    getSceneryList, getrotationList, updUserInfo,
+    getSearchContent, updPasswordById, delAdmin,
+    getWzList
   } from '../../api/common'
   import '../../assets/iconfont/iconfont'
+  import PageBar from '@/components/PageBar'
 
   export default {
     name: 'person',
@@ -223,11 +263,33 @@
         },
         addressDialog: false,
         updDialogVisible: false,
+        updDialogVisible2: false,
         shoppingNum: 0,
 
         titleName: '我的账号',
+        activeName: 'first',
+        allDetailList: [],
+        allDetailList2: [],
+
+        // 分页查询
+        pagenum: 1,
+        pagesize: 6,
+        pageTotal: 0,
+
+        // 我的列表分页
+        pagenum2: 1,
+        pagesize2: 6,
+        pageTotal2: 0,
+
+        wzInfo:{
+
+        }
 
       }
+    },
+    components: {
+      PageBar
+
     },
     created() {
       this.init()
@@ -240,19 +302,24 @@
         // 是否登录
         if (!this.loginIs()) {
           this.$notify({message: '请先登录', type: 'error', duration: 1700})
-          this.$router.push('/phone/login')
+          this.$router.push('/logins')
           return false
         }
 
 
-        getAddressList(this.UserInfo.id).then(res => {
-          if (res.success) {
-            this.addressList = res.data.data
-            console.log(this.addressList)
-          } else {
-            this.$notify({message: res.message, type: 'error', duration: 1700})
-          }
+        let params = {
+          pagenum: this.pagenum,
+          pagesize: this.pagesize
+        }
+        await getWzList(this.UserInfo.id, params).then(res => {
+          if (res.success && res.data.data.length != 0) {
 
+            this.allDetailList = res.data.data.filter(item => item.top == 0)
+            this.pageTotal = this.allDetailList.length
+
+            this.allDetailList2 = res.data.data.filter(item => item.top == 1)
+            this.pageTotal2 = this.allDetailList2.length
+          }
         })
 
       },
@@ -270,17 +337,70 @@
 
       },
 
+      // 分页
+      handleSizeChange(pagesize) {
+        this.pagesize = pagesize
+        this.getInit()
+      },
+      handleCurrentChange(pagenum) {
+        this.pagenum = pagenum
+        this.getInit()
+      },
+      // 分页
+      handleSizeChange2(pagesize) {
+        this.pagesize2 = pagesize
+        this.getInit()
+      },
+      handleCurrentChange2(pagenum) {
+        this.pagenum2 = pagenum
+        this.getInit()
+      },
+
+      // 处理违章信息
+      goWZ(row) {
+        console.log(row)
+        this.$confirm(`是否确定处理此次违章?\n 您将被罚款 ${row.pay} ,扣除积分 ${row.jf} `, '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+
+          getJfUser(row.userid).then(res => {
+            if (res.success) {
+              let user = res.data.data
+              if (user.jf <= 0) {
+                this.$notify({message: '对不起，您的积分为0', type: 'error', duration: 1700})
+                return
+              }
+            } else {
+              this.$notify({message: '处理违章信息失败，请刷新页面再试', type: 'error', duration: 1700})
+            }
+          })
+
+          updWZ(row.userid, row.id).then(res => {
+            if (res.success) {
+              this.init()
+
+            } else {
+              this.$notify({message: '处理违章信息失败，请刷新页面再试', type: 'error', duration: 1700})
+            }
+          })
+        })
+
+
+      },
+
+      // 获取违章信息
+      getWZ(row) {
+        this.wzInfo = row
+        this.updDialogVisible2 = true
+      },
+
       // 去首页
       goHome() {
         this.$router.push({path: `/home`})
       },
 
-      // 购物车
-      goShopping() {
-        // 后台请求购物车数据
-        const {href} = this.$router.resolve({path: '/phone/shopping'})
-        window.open(href, '_blank')
-      },
 
       // 修改密码
       goUpd() {
@@ -294,8 +414,18 @@
 
       // 退出登录
       layoutGo() {
-        window.localStorage.removeItem('UserInfoPhone')
-        this.$router.push({path: '/home'})
+
+        this.$confirm('是否确定退出系统?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+
+          window.localStorage.removeItem('UserInfoPhone')
+          this.$router.push({path: '/home'})
+
+        })
+
 
       },
 
@@ -322,13 +452,16 @@
 
       showIsOR(id) {
         if (id == 1) {
-          this.titleName = '我的账号'
+          // 违章处理
+
+
           this.showIs = '1'
         } else if (id == 2) {
-          this.titleName = '我的订单'
+          // 获取积分
+
+
           this.showIs = '2'
         } else if (id == 3) {
-          this.titleName = '我的地址'
           this.showIs = '3'
         }
 
@@ -354,7 +487,7 @@
 
         if (this.addressInfo.name == ''
           || this.addressInfo.phone == ''
-          || this.addressInfo.address == ''  ) {
+          || this.addressInfo.address == '') {
           this.$notify({message: '地址填写不完整', type: 'error', duration: 1700})
           return
         }
@@ -393,7 +526,7 @@
     width: 100%;
     height: 100%;
     font-size: 14px;
-    background-color: #f3f3f3;
+    background-color: #ededed;
   }
 
   .top-bar {
@@ -446,7 +579,7 @@
 
   .co:hover {
     cursor: pointer;
-    color: #5a98de;
+    color: #bfdbc6;
   }
 
   /* ======= */
@@ -482,21 +615,21 @@
     line-height: 50px;
     text-align: center;
     font-size: 14px;
-    color: #5079d9;
+    color: #bfdbc6;
     width: 100%;
     cursor: pointer;
   }
 
   .base:hover {
     color: white;
-    background-color: #5079d9;
+    background-color: #bfdbc6;
   }
 
   .person-show-right {
-    width: 950px;
+    width: 1200px;
     border: solid 1px #dbdbdb;
     background-color: white;
-    border-radius: 8px;
+    border-radius: 6px;
   }
 
   .person-show-right-div {
@@ -529,7 +662,7 @@
 
   .person-show-bar .base:hover {
     cursor: pointer;
-    color: #5a98de;
+    color: #bfdbc6;
   }
 
 
@@ -648,40 +781,40 @@
 
   .person-show-right-div-item {
     padding: 20px;
+    margin-bottom: 40px;
+    display: flex;
+
   }
 
-  .btn22 {
-    margin-left: 40px;
-    margin-top: 40px;
-    background-color: #5a98de;
-    width: 180px;
-    height: 70px;
-  }
 
   .btn2ww2 {
     margin-left: 20px;
     margin-top: 2px;
-    background-color: #5a98de;
+    background-color: #bfdbc6;
     width: 140px;
     height: 50px;
     margin-bottom: 10px;
   }
 
   .btn2ww2333 {
-    background-color: #5a98de;
+    background-color: #bfdbc6;
     text-align: right;
   }
 
   /deep/ .el-button--success:focus, .el-button--success:hover {
-    background: #5a98de;
-    border-color: #5a98de;
+    background: #bfdbc6;
+    border-color: #bfdbc6;
     color: #FFF;
   }
 
   /deep/ .el-button--success {
     color: #FFF;
-    background-color: #5a98de;
-    border-color: #5a98de;
+    background-color: #bfdbc6;
+    border-color: #bfdbc6;
+  }
+
+  /deep/ .el-button {
+    padding: 0;
   }
 
   .addr .uname {
@@ -707,11 +840,11 @@
 
 
   .addr {
-    margin-left: 20px;
+    /*margin-left: 20px;*/
     margin-top: 20px;
-    width: 385px;
-    height: 140px;
-    border: solid 1px #5a98de;
+    width: 80px;
+    height: 40px;
+    border: solid 1px #bfdbc6;
     border-radius: 6px;
     display: flex;
     flex-direction: column;
@@ -720,6 +853,116 @@
   .aaaaaaaa {
     display: flex;
     flex-wrap: wrap;
+  }
+
+  .header {
+    width: 100%;
+    height: 60px;
+    background-color: black;
+    display: flex;
+  }
+
+  .header-item {
+    width: 1200px;
+    height: 100%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+
+  }
+
+  .header-item-icon {
+    line-height: 60px;
+    font-size: 22px;
+    font-weight: 500;
+    cursor: pointer;
+    color: white;
+  }
+
+  .loginTar {
+    line-height: 60px;
+    color: white;
+    margin-right: 10px;
+  }
+
+
+  .header-item-search {
+    width: 400px;
+    display: flex;
+  }
+
+  .header-item-search-ic {
+    width: 340px;
+    margin: auto;
+  }
+
+  .el-button--primary {
+    color: #FFF;
+    background-color: #bfdbc6;
+    border-color: #bfdbc6;
+  }
+
+
+  .dov {
+    width: 200px;
+    height: 440px;
+    display: flex;
+    flex-direction: column;
+    background-color: #f6f6f6;
+    border-radius: 10px;
+    padding-top: 20px;
+
+  }
+
+
+  .dov-right {
+    margin-left: 20px;
+    width: 930px;
+    min-height: 440px;
+    display: flex;
+    flex-direction: column;
+    background-color: #f6f6f6;
+    border-radius: 10px;
+    padding-top: 20px;
+
+  }
+
+
+  .btn22 {
+    margin-left: 50px;
+    margin-top: 10px;
+    background-color: #aac3b0;
+    width: 80px;
+    border-color: #bfdbc6;
+    height: 30px;
+  }
+
+  .dov-right-item {
+    padding: 0 20px;
+  }
+
+  .el-timeline-item__timestamp {
+    font-size: 16px;
+  }
+
+  /deep/ .el-tabs__item.is-active {
+    color: #ebb563;
+  }
+
+  /deep/ .el-tabs__item:hover {
+    color: #ebb563;
+    cursor: pointer;
+  }
+
+  /deep/ .el-tabs__active-bar {
+    background-color: #ebb563;
+  }
+
+  /deep/ .el-table th > .cell {
+    font-size: 14px;
+  }
+  .bb{
+    margin-top: 4px;
   }
 
 </style>

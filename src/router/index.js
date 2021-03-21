@@ -44,49 +44,40 @@ export const constantRoutes = [
     meta: {title: '智能交通'}
   },
 
-  {
-    path: '/phone/shopping',
-    hidden: true,
-    name: '云购手机购物车',
-    component: () => import('@/views/home/shopping'),
-    meta: {title: '云购手机购物车'}
-  },
 
-  // 注册
   {
-    path: '/phone/my',
+    path: '/center',
     hidden: true,
-    name: '云购手机个人中心',
+    name: '个人中心',
     component: () => import('@/views/home/person'),
-    meta: {title: '云购手机个人中心'}
+    meta: {title: '个人中心'}
   },
 
   // login
   {
-    path: '/phone/login',
+    path: '/logins',
     hidden: true,
-    name: '云购手机登录',
+    name: '登录',
     component: () => import('@/views/home/userLogin'),
-    meta: {title: '云购手机登录'}
+    meta: {title: '登录'}
   },
   // login
   {
     path: '/ShowNewsInfo/:id',
     hidden: true,
-    name: '详情',
+    name: '交通资讯详情',
     component: () => import('@/views/home/ShowNewsInfo'),
-    meta: {title: '详情'}
+    meta: {title: '交通资讯详情'}
   },
-
-
-  // 详情
   {
-    path: '/phone/show/:id',
+    path: '/ShowInfo/:id',
     hidden: true,
-    name: '手机详情',
-    component: () => import('@/views/home/sceneryInfo'),
-    meta: {title: '手机详情'}
+    name: '今日道路详情',
+    component: () => import('@/views/home/ShowInfo'),
+    meta: {title: '今日道路详情'}
   },
+
+
 
 
   /**
@@ -198,8 +189,8 @@ export const constantRoutes = [
     path: '/infos',
     component: Layout,
     redirect: '/infos/list',
-    name: '交通咨询',
-    meta: {title: '交通咨询', icon: 'el-icon-s-cooperation'},
+    name: '交通资讯',
+    meta: {title: '交通资讯', icon: 'el-icon-s-cooperation'},
     children: [
       {
         path: 'list',
@@ -279,27 +270,27 @@ export const constantRoutes = [
   /**
    *  统计
    */
-  {
-    path: '/chart',
-    component: Layout,
-    redirect: '/chart/cate',
-    name: '数据展示',
-    meta: {title: '数据展示', icon: 'el-icon-s-marketing'},
-    children: [
-      {
-        path: 'cate',
-        name: '品牌统计',
-        component: () => import('@/views/chart/user'),
-        meta: {title: '品牌统计', icon: 'table'}
-      }
-      // , {
-      //   path: 'order',
-      //   name: '交易统计',
-      //   component: () => import('@/views/chart/chart'),
-      //   meta: { title: '交易统计', icon: 'table' }
-      // }
-    ]
-  },
+  // {
+  //   path: '/chart',
+  //   component: Layout,
+  //   redirect: '/chart/cate',
+  //   name: '数据展示',
+  //   meta: {title: '数据展示', icon: 'el-icon-s-marketing'},
+  //   children: [
+  //     {
+  //       path: 'cate',
+  //       name: '品牌统计',
+  //       component: () => import('@/views/chart/user'),
+  //       meta: {title: '品牌统计', icon: 'table'}
+  //     }
+  //     // , {
+  //     //   path: 'order',
+  //     //   name: '交易统计',
+  //     //   component: () => import('@/views/chart/chart'),
+  //     //   meta: { title: '交易统计', icon: 'table' }
+  //     // }
+  //   ]
+  // },
   /**
    * 日志管理
    */

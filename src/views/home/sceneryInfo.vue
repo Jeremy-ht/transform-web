@@ -276,7 +276,7 @@
       go() {
         // 是否登录
         if (!this.loginIs()) {
-          const {href} = this.$router.resolve({path: '/phone/login'})
+          const {href} = this.$router.resolve({path: '/logins'})
           window.open(href, '_blank')
         } else {
           this.totalPrice = this.num * this.detailInfo.price
@@ -351,7 +351,7 @@
         // 是否登录
         if (!this.loginIs()) {
           this.$notify({message: '请先登录', type: 'error', duration: 1700})
-          const {href} = this.$router.resolve({path: '/phone/login'})
+          const {href} = this.$router.resolve({path: '/logins'})
           window.open(href, '_blank')
           return
         }
