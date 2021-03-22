@@ -28,65 +28,10 @@
       </div>
 
 
-      <!--      <div class="home-item">-->
-      <!--        &lt;!&ndash; 图标 &ndash;&gt;-->
-      <!--        <div class="home-item-svg item">-->
-      <!--          <svg class="icon iconfont" aria-hidden="true">-->
-      <!--            <use xlink:href="#icon-yonghu1"/>-->
-      <!--          </svg>-->
-      <!--        </div>-->
+<!--      <div id="main" style="width: 500px;height: 500px;">-->
 
-      <!--        &lt;!&ndash; 文字 &ndash;&gt;-->
-      <!--        <div class="home-item-text item">-->
-      <!--          <div class="text-div" @click="goPath(1)">新增用户</div>-->
-      <!--          <div class="number-div" @click="goPath(1)">{{home.todayUser}}</div>-->
-      <!--        </div>-->
-      <!--      </div>-->
+<!--      </div>-->
 
-      <!--      <div class="home-item">-->
-      <!--        &lt;!&ndash; 图标 &ndash;&gt;-->
-      <!--        <div class="home-item-svg item">-->
-      <!--          <svg class="icon iconfont" aria-hidden="true">-->
-      <!--            <use xlink:href="#icon-tubiaozhizuomobanyihuifu-"/>-->
-      <!--          </svg>-->
-      <!--        </div>-->
-
-      <!--        &lt;!&ndash; 文字 &ndash;&gt;-->
-      <!--        <div class="home-item-text item">-->
-      <!--          <div class="text-div" @click="goPath(2)">用户总计</div>-->
-      <!--          <div class="number-div" @click="goPath(2)">{{home.totalUser}}</div>-->
-      <!--        </div>-->
-      <!--      </div>-->
-
-      <!--      <div class="home-item">-->
-      <!--        &lt;!&ndash; 图标 &ndash;&gt;-->
-      <!--        <div class="home-item-svg item">-->
-      <!--          <svg class="icon iconfont" aria-hidden="true">-->
-      <!--            <use xlink:href="#icon-fengjing"/>-->
-      <!--          </svg>-->
-      <!--        </div>-->
-
-      <!--        &lt;!&ndash; 文字 &ndash;&gt;-->
-      <!--        <div class="home-item-text item">-->
-      <!--          <div class="text-div" @click="goPath(3)">新增景点</div>-->
-      <!--          <div class="number-div" @click="goPath(3)">{{home.detail}}</div>-->
-      <!--        </div>-->
-      <!--      </div>-->
-
-      <!--      <div class="home-item">-->
-      <!--        &lt;!&ndash; 图标 &ndash;&gt;-->
-      <!--        <div class="home-item-svg item">-->
-      <!--          <svg class="icon iconfont" aria-hidden="true">-->
-      <!--            <use xlink:href="#icon-pinglun1"/>-->
-      <!--          </svg>-->
-      <!--        </div>-->
-
-      <!--        &lt;!&ndash; 文字 &ndash;&gt;-->
-      <!--        <div class="home-item-text item">-->
-      <!--          <div class="text-div" @click="goPath(4)">新增评论</div>-->
-      <!--          <div class="number-div" @click="goPath(4)">{{home.comment}}</div>-->
-      <!--        </div>-->
-      <!--      </div>-->
 
     </div>
   </div>
@@ -94,7 +39,8 @@
 
 <script>
   import '../../assets/iconfont/iconfont'
-  import {delAdmin, getHomeCount} from '../../api/common'
+  import {delAdmin, getEchartsOrder, getHomeCount} from '../../api/common'
+  import * as echart from "echarts"
 
   export default {
     name: 'Dashboard',
@@ -103,6 +49,9 @@
         home: {},
         user: {},
         username: '',
+        charts: '',
+        opinion: ['男', '女'],
+        opinionData: []
 
       }
     },
@@ -123,6 +72,40 @@
         this.user = admin
         this.username = admin.username
 
+
+        // getEchartsOrder().then(res => {
+        //   if (res.success) {
+        //     this.opinionData = []
+        //     this.opinionData = res.data.data
+        //   }
+        // })
+        //
+        // let myChart = echart.init(document.getElementById('main'))
+        // // 绘制图表
+        // myChart.setOption(
+        //   {
+        //     title: {
+        //       text: '2021年度月总销售订单',
+        //       left: 'left',
+        //       textStyle: {
+        //         color: '#FF8040'
+        //       }
+        //     },
+        //     xAxis: {
+        //       type: 'category',
+        //       data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月',
+        //         '8月', '9月', '10月', '11月', '12月']
+        //     },
+        //     yAxis: {
+        //       type: 'value',
+        //       boundaryGap: [0, 1]
+        //     },
+        //     series: [{
+        //       data: this.opinionData,
+        //       type: 'bar'
+        //     }]
+        //
+        //   })
       },
 
       goPath(id) {

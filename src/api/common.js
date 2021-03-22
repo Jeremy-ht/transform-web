@@ -345,7 +345,7 @@ export function getEchartsCategory() {
 
 export function getEchartsOrder() {
   return request({
-    url: baseURL + `/orders/getEchartsOrder`,
+    url: baseURL + `/detail/getEchartsUser`,
     method: 'get'
   })
 }

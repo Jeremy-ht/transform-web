@@ -152,10 +152,10 @@
           return false
         }
 
-        // if (this.addDetail.newscover == '') {
-        //   this.$notify({message: '请添加图片', type: 'error', duration: 1700})
-        //   return false
-        // }
+        if (this.addDetail.newscover == '') {
+          this.$notify({message: '请添加图片', type: 'error', duration: 1700})
+          return false
+        }
 
         return true
       },

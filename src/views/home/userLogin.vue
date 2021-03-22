@@ -313,14 +313,14 @@
 
       registerGo2() {
 
-        // if (this.registerForm.cph.trim() != '' ||
-        //   this.registerForm.uname.color() != '' ||
-        //   this.registerForm.uname.carimage() != '') {
-        //   this.$notify({
-        //     title: '警告', message: '车辆信息必须全部填写', type: 'warning'
-        //   });
-        //   return
-        // }
+        if (this.registerForm.cph == '' ||
+          this.registerForm.uname.color == '' ||
+          this.registerForm.uname.carimage == '') {
+          this.$notify({
+            title: '警告', message: '车辆信息必须全部填写', type: 'warning'
+          });
+          return
+        }
 
 
         addUser(this.registerForm).then(res => {

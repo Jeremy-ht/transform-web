@@ -230,6 +230,11 @@
           return false
         }
 
+        if (id == 1) {
+          this.$notify({ message: '管理员账号不可删除', type: 'error', duration: 1700 })
+          return false
+        }
+
         this.$confirm('是否确定删除该员工?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',

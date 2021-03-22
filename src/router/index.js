@@ -46,7 +46,7 @@ export const constantRoutes = [
 
 
   {
-    path: '/center',
+    path: '/center/:id',
     hidden: true,
     name: '个人中心',
     component: () => import('@/views/home/person'),

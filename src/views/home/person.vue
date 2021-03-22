@@ -104,16 +104,27 @@
               </div>
 
               <div class="dov-right-item" v-if="showIs == '2'">
+                <div style="margin-left: 46px;margin-bottom: 20px">剩余积分： <span style="font-size: 18px;font-weight: 500">{{jf}}</span>
+                </div>
 
-
-                <el-timeline>
-                  <el-timeline-item timestamp="2018/4/12" placement="top">
+                <el-timeline v-if="allDetailList3.length != 0">
+                  <el-timeline-item :timestamp="item.creatime.substring(0, 10)" placement="top"
+                                    v-for="item in allDetailList3" :key="item.id">
                     <el-card>
-                      <h4>更新 Github 模板</h4>
-                      <p>王小虎 提交于 2018/4/12 20:46</p>
+                      <!--                      <h4>{{item}}</h4>-->
+                      <p>{{computWordNumber(item.content)}}</p>
+                      <p>{{item.creatime + ''}}
+                        <span class="xiangqing" @click="getWZ(item)">
+                        查看详情
+                      </span>
+                      </p>
                     </el-card>
                   </el-timeline-item>
                 </el-timeline>
+
+                <div v-else style="margin-top: 100px;margin-left: 310px;font-size: 18px;font-weight:600">
+                   没有积分记录，继续保持良好开车习惯！
+                </div>
               </div>
             </div>
 
@@ -211,6 +222,8 @@
           id: 0,
         },
 
+        jf: 0,
+
         // 分类
         cateList: [],
 
@@ -222,24 +235,6 @@
         loginDialog: false,
         regDialog: false,
         comment: '',
-
-        // 地址表单验证
-        loginFormRules3: {
-          name:
-            [
-              {required: true, message: '请输入收件人', trigger: 'blur'},
-              {min: 2, max: 50, message: '长度在 2 到 50 个字符', trigger: 'blur'}
-            ],
-          address:
-            [
-              {required: true, message: '请输入地址', trigger: 'blur'},
-              {min: 5, max: 100, message: '请输入地址请填写正确地址', trigger: 'blur'}
-            ],
-          phone: [
-            {required: true, message: '请输入手机号', trigger: 'blur'},
-            {validator: checkMobile, trigger: 'blur'}
-          ]
-        },
 
         // 购物车
         checked: false,
@@ -270,6 +265,7 @@
         activeName: 'first',
         allDetailList: [],
         allDetailList2: [],
+        allDetailList3: [],
 
         // 分页查询
         pagenum: 1,
@@ -281,9 +277,7 @@
         pagesize2: 6,
         pageTotal2: 0,
 
-        wzInfo:{
-
-        }
+        wzInfo: {}
 
       }
     },
@@ -298,6 +292,13 @@
     methods: {
       // 初始化
       async init() {
+        let id = this.$route.params.id
+        if (id == 1) {
+          this.showIs = 1
+        } else {
+          this.showIs = 2
+        }
+
 
         // 是否登录
         if (!this.loginIs()) {
@@ -311,8 +312,11 @@
           pagenum: this.pagenum,
           pagesize: this.pagesize
         }
+
         await getWzList(this.UserInfo.id, params).then(res => {
           if (res.success && res.data.data.length != 0) {
+
+            this.allDetailList3 = res.data.data
 
             this.allDetailList = res.data.data.filter(item => item.top == 0)
             this.pageTotal = this.allDetailList.length
@@ -321,6 +325,14 @@
             this.pageTotal2 = this.allDetailList2.length
           }
         })
+
+
+        getJfUser(this.UserInfo.id).then(res => {
+          if (res.success) {
+            this.jf = res.data.data.jf
+          }
+        })
+
 
       },
 
@@ -358,7 +370,6 @@
 
       // 处理违章信息
       goWZ(row) {
-        console.log(row)
         this.$confirm(`是否确定处理此次违章?\n 您将被罚款 ${row.pay} ,扣除积分 ${row.jf} `, '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -387,7 +398,6 @@
           })
         })
 
-
       },
 
       // 获取违章信息
@@ -414,7 +424,6 @@
 
       // 退出登录
       layoutGo() {
-
         this.$confirm('是否确定退出系统?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -450,16 +459,23 @@
 
       },
 
+      // 获取纯文本
+      computWordNumber(content) {
+        let text = content.replace(/<[^>]*>|/g, "")
+        text = text.replace('&nbsp;', ' ')
+        if (text.length >= 100) {
+          text = text.substring(0, 100)
+          text += '......'
+        }
+        return text
+      },
+
       showIsOR(id) {
         if (id == 1) {
           // 违章处理
-
-
           this.showIs = '1'
         } else if (id == 2) {
           // 获取积分
-
-
           this.showIs = '2'
         } else if (id == 3) {
           this.showIs = '3'
@@ -467,53 +483,6 @@
 
       },
 
-
-      // 地址
-      addAddress() {
-        this.addressInfo = {
-          'name': '',
-          'phone': '',
-          'address': ''
-        }
-        this.addressDialog = true
-      },
-
-      goAddAddress() {
-
-        if (this.UserInfo.id == 0) {
-          this.$notify({message: '请重新登录', type: 'error', duration: 1700})
-          return
-        }
-
-        if (this.addressInfo.name == ''
-          || this.addressInfo.phone == ''
-          || this.addressInfo.address == '') {
-          this.$notify({message: '地址填写不完整', type: 'error', duration: 1700})
-          return
-        }
-
-        let address = {
-          'userid': this.UserInfo.id,
-          'name': this.addressInfo.name,
-          'phone': this.addressInfo.phone,
-          'address': this.addressInfo.address
-        }
-        addAddress(address).then(res => {
-          if (res.success) {
-            // this.$notify({ message: '成功添加', type: 'success', duration: 1700 })
-            this.init()
-          } else {
-            this.$notify({message: '添加失败', type: 'error', duration: 1700})
-          }
-        })
-
-        this.addressInfo = {
-          'name': '',
-          'phone': '',
-          'address': ''
-        }
-        this.addressDialog = false
-      }
 
     }
   }
@@ -630,6 +599,7 @@
     border: solid 1px #dbdbdb;
     background-color: white;
     border-radius: 6px;
+    margin-bottom: 40px;
   }
 
   .person-show-right-div {
@@ -961,8 +931,14 @@
   /deep/ .el-table th > .cell {
     font-size: 14px;
   }
-  .bb{
+
+  .bb {
     margin-top: 4px;
   }
 
+  .xiangqing {
+    cursor: pointer;
+    color: #ebb563;
+    margin-left: 10px;
+  }
 </style>

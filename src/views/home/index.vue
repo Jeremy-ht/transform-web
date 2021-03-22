@@ -110,9 +110,9 @@
         </div>
       </div>
 
-      <div class="one-div four">
+      <div class="one-div four" @click="goChange(4)">
         <div>
-          今 日 道 路
+          积分信息
         </div>
       </div>
 
@@ -553,12 +553,16 @@
           if (!this.loginIs()) {
             this.$notify({title: '警告', message: '请登录系统', type: 'warning'});
           } else {
-            this.$router.push({path: `/center`})
+            this.$router.push({path: `/center/1`})
           }
 
-
         } else if (id == 4) {
-          // 今 日 道 路
+          // 积分
+          if (!this.loginIs()) {
+            this.$notify({title: '警告', message: '请登录系统', type: 'warning'});
+          } else {
+            this.$router.push({path: `/center/2`})
+          }
 
         }
 
@@ -978,7 +982,7 @@
   }
 
   .four {
-    background-image: url("../../assets/70.jpg");
+    background-image: url("../../assets/60.jpg");
   }
 
 
